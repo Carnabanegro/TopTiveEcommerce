@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "db": "npx sequelize db:create"
+    "db": "npx sequelize db:create",
+    "dataCreate": "npx sequelize-cli db:seed:all"
   },
   "author": "",
   "license": "ISC",
