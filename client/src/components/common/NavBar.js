@@ -14,8 +14,6 @@ function NavBar({token, routes,abmStatus}) {
         setOpen(true);
     };
     const logout = () => {
-        // eslint-disable-next-line no-undef
-        console.log('fdsfsdf')
         localStorage.clear();
         window.location = '/';
     };

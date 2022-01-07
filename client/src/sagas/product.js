@@ -7,8 +7,10 @@ import {addSucceeded, requestAdd} from "../actions/abmStatus";
 export function* fetchProducts({fname,fvalue,current,userId,myProducts}){
     yield put(clearError());
     try {
-        const {result, size, total, page} = yield call(ProductService.fetch,fname,fvalue, current,userId,myProducts)
-        if (result) {
+        const {result, size, total, page, error} = yield call(ProductService.fetch,fname,fvalue, current,userId,myProducts)
+        if (error){
+            yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: error, sagaName: "order"}));
+        }else{
             yield put(requestProductsSucceeded(result,size,total,page));
         }
     }catch (err){

@@ -21,10 +21,22 @@ function RouterCustom({session}) {
 
     const routes = [
         {key: 4, path: "/sells", exact: true, main: () => <OrdersList/>, name: "My Sells"},
-        {key: 5, path: "/purchases", exact: true, main: () => <PurchasesList/>, name: "My Buys"},
+        {key: 5, path: "/purchases", exact: true, main: () => <PurchasesList/>, name: "My Buys"}
+    ]
+
+    const adminRoutes = [
         {key: 6, path: "/admin", exact: true, main: () => <AdminPanel/>, name: "Admin panel"}
     ]
-    let allRoutes = session.profile && session.token ? [...routesSignIn, ...routes] : routesSignIn;
+    let allRoutes;
+    if (session.profile && session.token){
+        if (session.profile.role === "Admin"){
+            allRoutes = [...routesSignIn, ...routes, ...adminRoutes];
+        }else{
+            allRoutes = [...routesSignIn, ...routes];
+        }
+    }else{
+        allRoutes = routesSignIn;
+    }
 
 
     return (

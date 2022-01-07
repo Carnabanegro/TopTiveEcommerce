@@ -21,7 +21,7 @@ export default class User {
             && !isEmpty(this.email)
             && !isEmpty(this.password)
             && !isEmpty(this.tel)
-            && !isEmpty(this.RoleId)
+            && !isEmpty(this.ROLE)
             && this.password === this.cPassword;
     }
 }

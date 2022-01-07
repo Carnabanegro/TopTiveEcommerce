@@ -6,34 +6,39 @@ import {useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {requestRegister} from "../../actions/user";
+import InfoHandler from "../common/InfoHandler";
+import {clearError} from "../../actions";
 
-function Register({requestRegister,abmStatus}) {
+function Register({requestRegister,abmStatus,error,clearError}) {
 
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
-    const [fullName, setFullName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("")
     const [tel, setTel] = useState("");
     const navigate = useNavigate();
 
     function handleForm(e) {
         e.preventDefault()
-        requestRegister(user, password, fullName, email, tel)
+        requestRegister(user, password, firstName,lastName, email, tel)
     }
 
     function handleBack() {
         navigate(-1);
+        clearError()
     }
+
 
     useEffect(() => {
         if (abmStatus.success && !abmStatus.sending && !abmStatus.saving) {
-            navigate("/login");
+            navigate("/");
         }
     },[abmStatus]);
 
     return (
         <Container>
-            <Row class="align-items-center">
+            <Row class="p-5 align-items-center">
                 <Col sm={{size: 4, offset: 4}}>
                     <Row>
                         <Col>
@@ -81,21 +86,35 @@ function Register({requestRegister,abmStatus}) {
                                 </Row>
                                 <Row class="vertical-margin">
                                     <Col sm="12">
-                                        <FormGroup controlId="password">
+                                        <FormGroup controlId="firstName">
                                             <Input
-                                                id="fullName"
-                                                type="fullName"
-                                                value={fullName}
-                                                placeholder="Full name"
+                                                id="firstName"
+                                                type="firstName"
+                                                value={firstName}
+                                                placeholder="First name"
                                                 required
-                                                onChange={e => setFullName(e.target.value)}
+                                                onChange={e => setFirstName(e.target.value)}
                                             />
                                         </FormGroup>
                                     </Col>
                                 </Row>
                                 <Row class="vertical-margin">
                                     <Col sm="12">
-                                        <FormGroup controlId="password">
+                                        <FormGroup controlId="lastName">
+                                            <Input
+                                                id="lastName"
+                                                type="lastName"
+                                                value={lastName}
+                                                placeholder="Last name"
+                                                required
+                                                onChange={e => setLastName(e.target.value)}
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row class="vertical-margin">
+                                    <Col sm="12">
+                                        <FormGroup controlId="tel">
                                             <Input
                                                 id="tel"
                                                 type="tel"
@@ -109,7 +128,7 @@ function Register({requestRegister,abmStatus}) {
                                 </Row>
                                 <Row class="vertical-margin">
                                     <Col sm="12">
-                                        <FormGroup controlId="password">
+                                        <FormGroup controlId="email">
                                             <Input
                                                 id="email"
                                                 type="email"
@@ -148,16 +167,28 @@ function Register({requestRegister,abmStatus}) {
                     </Row>
                 </Col>
             </Row>
+            <Row className="p-4">
+                <InfoHandler
+                    errorLabel={error.errorMsg}
+                    error={error.anErrorOccurred}
+                    saving={abmStatus.saving}
+                    success={abmStatus.success}
+                />
+            </Row>
         </Container>
+
+
     );
 }
 
 export default connect(
     state => ({
-       abmStatus: state.abmStatus
+        abmStatus: state.abmStatus,
+        error: state.error
     }),
     dispatch => ({
-        requestRegister: (username, password, fullName, email, tel) => dispatch(requestRegister(username, password, fullName, email, tel))
+        requestRegister: (username, password, firstName,lastName, email, tel) => dispatch(requestRegister(username, password,firstName,lastName, email, tel)),
+        clearError: () => dispatch(clearError())
     })
 )(Register)
 
@@ -172,6 +203,7 @@ Register.protoTypes = {
         sending: PropTypes.bool
     }),
     requestRegister: PropTypes.func.isRequired,
+    clearError: PropTypes.func.isRequired
 }
 
 Register.defaultProps = {

@@ -4,7 +4,7 @@ const ENDPOINT = '/orders';
 
 export default class OrderService{
 
-    static fetch(fname,fvalue,current,userId,token){
+    static fetch(fname,fvalue,current,userId){
         let parameters = '';
 
         if (fvalue) {
@@ -29,7 +29,7 @@ export default class OrderService{
                 parameters += `/?current=${current}`;
             }
         }
-        return(Http.getAuth(`${ENDPOINT}${parameters}`,token));
+        return(Http.get(`${ENDPOINT}${parameters}`));
     }
 
     static save(currency,value,username,productName,token){

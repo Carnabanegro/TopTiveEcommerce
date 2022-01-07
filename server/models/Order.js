@@ -6,14 +6,20 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isIn: [['usd$', '$']],
+                isIn: {
+                    args: [['usd$', '$']],
+                    msg: "The currency must be usd$ or $"
+                }
             }
         },
         value: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isFloat: true,
+                isFloat: {
+                    args: true,
+                    msg: "Value must be a number"
+                }
             }
         },
     });

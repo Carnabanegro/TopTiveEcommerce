@@ -5,8 +5,9 @@ import PropTypes from "prop-types";
 import {requestOrders} from "../../actions/order";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {map} from "lodash";
+import InfoHandler from "../common/InfoHandler";
 
-function MyPurchases({fetchOrders, orders, current, profile}) {
+function MyPurchases({fetchOrders, orders, current, profile,error,abmStatus}) {
 
     useEffect(() => {
         fetchOrders(null, null, current, profile.id)
@@ -55,6 +56,12 @@ function MyPurchases({fetchOrders, orders, current, profile}) {
                 })}
                 </tbody>
             </Table>
+            <InfoHandler
+                errorLabel={error.errorMsg}
+                error={error.anErrorOccurred}
+                saving={abmStatus.saving}
+                success={abmStatus.success}
+            />
         </div>
     );
 }
@@ -65,7 +72,9 @@ export default connect(
         size: state.order.size,
         total: state.order.total,
         current: state.order.current,
-        profile: state.session.profile
+        profile: state.session.profile,
+        abmStatus: state.abmStatus,
+        error: state.error
     }),
     dispatch => ({
         fetchOrders: (fname, fvalue, current, userId) => dispatch(requestOrders(fname, fvalue, current, userId))
@@ -74,6 +83,15 @@ export default connect(
 
 
 MyPurchases.protoTypes = {
+    error: PropTypes.shape({
+        anErrorOccurred: PropTypes.bool,
+        errorMsg: PropTypes.string
+    }),
+    abmStatus: PropTypes.shape({
+        saving: PropTypes.bool,
+        success: PropTypes.bool,
+        sending: PropTypes.bool
+    }),
     orders: PropTypes.arrayOf(PropTypes.shape({})),
     profile: PropTypes.shape({}),
     fetchOrders: PropTypes.func.isRequired,
@@ -84,6 +102,15 @@ MyPurchases.protoTypes = {
 
 MyPurchases.defaultProps = {
     orders: null,
+    abmStatus: {
+        saving: false,
+        success: false,
+        sending: false,
+    },
+    error: {
+        anErrorOccurred: false,
+        errorMsg: ''
+    },
     current: 0,
     size: 0,
     total: 0

@@ -18,7 +18,8 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.12.4"
+    "sequelize": "^6.12.4",
+    "stripe": "^8.195.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",

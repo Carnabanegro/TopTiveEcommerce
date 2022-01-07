@@ -8,8 +8,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {requestLogin} from "../../actions/login";
 import CloseIcon from '@mui/icons-material/Close';
+import InfoHandler from "../common/InfoHandler";
+import {clearError} from "../../actions";
 
-function Login({requestLogin, token}) {
+function Login({requestLogin, token,abmStatus,error,clearError}) {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
@@ -22,6 +24,12 @@ function Login({requestLogin, token}) {
     function handleRegister(e) {
         e.preventDefault()
         navigate("/register")
+        clearError();
+    }
+
+    function handleBack(){
+        navigate(-1)
+        clearError()
     }
 
     useEffect(() => {
@@ -32,10 +40,10 @@ function Login({requestLogin, token}) {
 
     return (
         <div>
-            <Container>
+            <Container className="p-5">
                 <Form onSubmit={e => handleForm(e)}>
-                    <Row class="align-items-center">
-                        <Col sm="10">
+                    <Row class="align-items-center ">
+                        <Col sm="6">
                             <FormGroup>
                                 <h2>
                                     <FontAwesomeIcon icon={faChevronCircleRight}/>
@@ -43,8 +51,8 @@ function Login({requestLogin, token}) {
                                 </h2>
                             </FormGroup>
                         </Col>
-                        <Col sm="2">
-                            <Button onClick={() => navigate(-1)}>
+                        <Col sm="2" >
+                            <Button onClick={handleBack}>
                                 <CloseIcon/>
                             </Button>
                         </Col>
@@ -95,6 +103,14 @@ function Login({requestLogin, token}) {
                         </Col>
                     </Row>
                 </Form>
+                <Row className="p-4">
+                    <InfoHandler
+                        errorLabel={error.errorMsg}
+                        error={error.anErrorOccurred}
+                        saving={abmStatus.saving}
+                        success={abmStatus.success}
+                    />
+                </Row>
             </Container>
         </div>
     );
@@ -103,10 +119,13 @@ function Login({requestLogin, token}) {
 export default connect(
     state => ({
         login: state.login,
-        token: state.session.token
+        token: state.session.token,
+        abmStatus: state.abmStatus,
+        error: state.error
     }),
     dispatch => ({
-        requestLogin: (user, password) => dispatch(requestLogin(user, password))
+        requestLogin: (user, password) => dispatch(requestLogin(user, password)),
+        clearError: () => dispatch(clearError())
     })
 )(Login)
 
@@ -120,8 +139,16 @@ Login.protoTypes = {
     login: PropTypes.shape({
         error: PropTypes.bool
     }),
-    requestVerifyToken: PropTypes.func.isRequired,
-    verifyToken: PropTypes.bool,
+    error: PropTypes.shape({
+        anErrorOccurred: PropTypes.bool,
+        errorMsg: PropTypes.string
+    }),
+    abmStatus: PropTypes.shape({
+        saving: PropTypes.bool,
+        success: PropTypes.bool,
+        sending: PropTypes.bool
+    }),
+    clearError: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     requestLogin: PropTypes.func.isRequired,
     succeededMsj: PropTypes.string
@@ -129,6 +156,15 @@ Login.protoTypes = {
 
 Login.defaultProps = {
     profile: null,
+    abmStatus: {
+        saving: false,
+        success: false,
+        sending: false,
+    },
+    error: {
+        anErrorOccurred: false,
+        errorMsg: ''
+    },
     session: {
         error: false
     },
@@ -137,6 +173,5 @@ Login.defaultProps = {
         user: '',
         role: ''
     },
-    verifyToken: false,
     loading: true
 }

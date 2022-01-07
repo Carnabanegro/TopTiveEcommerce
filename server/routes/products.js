@@ -13,51 +13,86 @@ const getPagination = (page, size) => {
 
 router.get("/", async (req,res) =>{
 
-    const page = Number.parseInt(req.query.current);
-    const fname = req.query.fname;
-    const fvalue = req.query.fvalue;
-    const {limit,offset} = getPagination(page,10);
-    const query = {where:
-            ((req.query.userId && {UserId:{[Sequelize.Op.not]: req.query.userId}}) ||(fname && fvalue && {[fname]:{[Sequelize.Op.like]: fvalue}})), offset: offset, limit:limit, }
-    if (req.query.userId) {
-        query.include = [{model: User, attributes: ['fullName', 'email', 'tel']}];
+    try{
+        const page = Number.parseInt(req.query.current);
+        const {limit,offset} = getPagination(page,10);
+        const {fname,fvalue,userId} = req.query;
+        let where = {};
+        if (fvalue && fname) where.fname = {[Sequelize.Op.like]: fvalue};
+        if (userId) where.userId = {[Sequelize.Op.not]: userId};
+        let search ;
+        where.active = {[Sequelize.Op.like]: "S"}
+        let listOfProducts;
+        if(!userId){
+            search = {where,offset: offset, limit: limit}
+        }else {
+            search =  {where,offset: offset, limit: limit,include: {model: User, as: 'User', attributes: ['firstName','lastName', 'email', 'tel']}}
+
+        }
+        listOfProducts = await Product.findAndCountAll(search);
+        if(listOfProducts.count === 0){
+            res.status(200).send( {error: "Products Not Found"});
+        }else{
+            res.json({
+                result: listOfProducts.rows,
+                size: limit,
+                total: listOfProducts.count,
+                page: page
+            });
+        }
+    }catch (err){
+        res.status(404).json({
+            error: err
+        })
     }
-    const listOfProducts = await Product.findAndCountAll(query);
-    res.json({
-        result: listOfProducts.rows,
-        size: limit,
-        total: listOfProducts.count,
-        page: page
-    });
+
+
 });
 
 router.get("/myProducts", async (req,res) =>{
 
-    const page = Number.parseInt(req.query.current);
-    const fname = req.query.fname;
-    const fvalue = req.query.fvalue;
-    const {limit,offset} = getPagination(page,10);
-
-    const query = {where:
-            ((req.query.userId && {UserId:{[Sequelize.Op.like]: req.query.userId}, active:{[Sequelize.Op.like]: "S"}})
-                ||(fname && fvalue && {[fname]:{[Sequelize.Op.like]: fvalue}})), offset: offset, limit:limit, }
-
-    if (req.query.userId) {
-        query.include = [{model: User, attributes: ['fullName', 'email', 'tel']}];
+    try{
+        const page = Number.parseInt(req.query.current);
+        const {fname,fvalue,userId} = req.query;
+        const {limit,offset} = getPagination(page,10);
+        let where = {};
+        if (fvalue && fname) where.fname = {[Sequelize.Op.like]: fvalue};
+        if (userId) where.userId = {[Sequelize.Op.like]: userId};
+        let search ;
+        where.active = {[Sequelize.Op.like]: "S"}
+        let listOfProducts;
+        if(!userId){
+            search = {where,offset: offset, limit: limit}
+        }else {
+            search =  {where,offset: offset, limit: limit,include: {model: User, as: 'User', attributes: ['firstName','lastName', 'email', 'tel']}}
+        }
+        listOfProducts = await Product.findAndCountAll(search);
+        if (listOfProducts.count === 0){
+            res.status(200).send( {error: "Products Not Found"});
+        }else{
+            res.json({
+                result: listOfProducts.rows,
+                size: limit,
+                total: listOfProducts.count,
+                page: page
+            });
+        }
+    }catch (err){
+        res.status(404).json({
+            error: err
+        })
     }
-    const listOfProducts = await Product.findAndCountAll(query);
-    res.json({
-        result: listOfProducts.rows,
-        size: limit,
-        total: listOfProducts.count,
-        page: page
-    });
+
 });
 
 
 router.get("/:id", async (req,res) =>{
     const product = await User.findByPk(req.params.id);
-    res.json(product);
+    if (!product){
+        res.status(200).send( {error: "Product Doesn't exists"});
+    }else{
+        res.json(product);
+    }
 })
 
 

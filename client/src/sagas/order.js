@@ -7,13 +7,14 @@ import {addSucceeded, requestAdd} from "../actions/abmStatus";
 export function* fetchOrders({fname,fvalue,current,userId}){
     yield put(clearError());
     try {
-        const token = yield select(state => state.session.token);
-        const {result, size, total, page} = yield call(OrderService.fetch,fname,fvalue, current,userId,token);
-        if (result) {
+        const {result, size, total,page, error} = yield call(OrderService.fetch,fname,fvalue, current,userId);
+        if (error){
+            yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: error, sagaName: "order"}));
+        }else{
             yield put(requestOrdersSucceeded(result,size,total,page));
         }
     }catch (err){
-        yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: 'Error de fetch de ordenes', sagaName: "order"}));
+        yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: err, sagaName: "order"}));
     }
 }
 
@@ -23,9 +24,11 @@ export function* saveOrderRequested({currency,value,username,productName,actionT
         yield put(requestAdd());
         const token = yield select(state => state.session.token);
         if (actionType === "save"){
-            const order = yield  call(OrderService.save,currency,value,username,productName,token)
-            if (order){
-                yield put(saveOrderSucceeded(order))
+            const {result,error} = yield  call(OrderService.save,currency,value,username,productName,token)
+            if (error){
+                anErrorOccurred({anErrorOccurred: true, errorMsg: error, sagaName: "order"})
+            }else{
+                yield put(saveOrderSucceeded(result))
                 yield put(addSucceeded());
             }
         }

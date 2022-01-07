@@ -4,9 +4,6 @@ import Http from './http';
 const ENDPOINT = '/users';
 
 export default class UserService {
-    /* static validate(email, username) {
-         return Http.get(`${ENDPOINT}/validate/${email}/${username}`);
-     }*/
 
     static login(username, password) {
         console.log(username)
@@ -24,7 +21,7 @@ export default class UserService {
     static fetch(token) {
 
         if (token) {
-            return Http.getAuth(`${ENDPOINT}/`, token);
+            return Http.get(`${ENDPOINT}/`, token);
         }
         return {
             result: null,
@@ -34,9 +31,9 @@ export default class UserService {
     }
 
 
-    static saveUser(username, password, fullName, email, tel) {
+    static saveUser(username, password, firstName,lastName, email, tel) {
         const user = {
-            username, password, fullName, email, tel
+            username, password, firstName,lastName, email, tel
         };
         return Http.register(`${ENDPOINT}/add`, user);
     }

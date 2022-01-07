@@ -1,4 +1,3 @@
-const  User = require('./User')
 module.exports = (sequelize, DataTypes) => {
 
     const Role = sequelize.define("Role", {
@@ -7,14 +6,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isAlpha: true,
+                isAlpha: {
+                    args: true,
+                    msg: "El rol solo puede contener letras"
+                }
             },
         },
     });
     Role.associate = (models) =>{
         Role.hasMany(models.User);
     }
-
 
     return Role;
 }

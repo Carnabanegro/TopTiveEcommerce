@@ -6,8 +6,11 @@ import {Button} from 'reactstrap';
 import FormProduct from '../common/form/FormProduct'
 import {requestProducts} from "../../actions/product";
 import Pagination from "../common/Pagination";
+import InfoHandler from "../common/InfoHandler";
+import {clearError} from "../../actions";
+import AddIcon from '@mui/icons-material/Add';
 
-function MyProductsToSell({products, fetchProducts, size, total,profile}) {
+function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatus,error,clearError}) {
     const [isAdd, setAdd] = useState(false)
     const [current, setCurrent] = useState(0);
 
@@ -21,6 +24,11 @@ function MyProductsToSell({products, fetchProducts, size, total,profile}) {
         fetchProducts(null, null, numberPage,profile.id,true)
     }
 
+    function handleTabAux(){
+        setAdd(!isAdd);
+        clearError()
+    }
+
     function handleTab(add){
         setAdd(add);
         fetchProducts(null, null, current,profile.id,true);
@@ -28,10 +36,14 @@ function MyProductsToSell({products, fetchProducts, size, total,profile}) {
 
     return (
         <div className="container-fluid">
-            <div className="row p-4 justify-content-center">
+            <div className="row p-4 justify-content-end">
                 <div className="col-sm-2">
                     <Button color="primary"
-                            onClick={() => setAdd(!isAdd)}>{!isAdd ? "Agregar Producto" : "Volver a la lista"}</Button>
+                            onClick={handleTabAux}>
+                        <AddIcon/>
+                        &nbsp;
+                        {!isAdd ? "Agregar Producto" : "Volver a la lista"}
+                    </Button>
                 </div>
             </div>
             <div className="row justify-content-center">
@@ -44,6 +56,12 @@ function MyProductsToSell({products, fetchProducts, size, total,profile}) {
                     <div className="col-sm-6"><FormProduct changeTab={handleTab}/></div>
                 }
             </div>
+            <InfoHandler
+                errorLabel={error.errorMsg}
+                error={error.anErrorOccurred}
+                saving={abmStatus.saving}
+                success={abmStatus.success}
+            />
         </div>
     );
 }
@@ -55,17 +73,29 @@ export default connect(
         total: state.product.total,
         current: state.product.current,
         profile: state.session.profile,
-        abmStatus: state.abmStatus
+        abmStatus: state.abmStatus,
+        error: state.error
     }),
     dispatch => ({
-        fetchProducts: (fname, fvalue, current,userId,myProducts) => dispatch(requestProducts(fname, fvalue, current,userId,myProducts))
+        fetchProducts: (fname, fvalue, current,userId,myProducts) => dispatch(requestProducts(fname, fvalue, current,userId,myProducts)),
+        clearError: () => dispatch(clearError())
     })
 )(MyProductsToSell)
 
 
 MyProductsToSell.protoTypes = {
+    error: PropTypes.shape({
+        anErrorOccurred: PropTypes.bool,
+        errorMsg: PropTypes.string
+    }),
+    abmStatus: PropTypes.shape({
+        saving: PropTypes.bool,
+        success: PropTypes.bool,
+        sending: PropTypes.bool
+    }),
     products: PropTypes.arrayOf(PropTypes.shape({})),
     fetchProducts: PropTypes.func.isRequired,
+    clearError: PropTypes.func.isRequired,
     current: PropTypes.number,
     size: PropTypes.number,
     total: PropTypes.number,
@@ -76,5 +106,14 @@ MyProductsToSell.defaultProps = {
     products: null,
     current: 0,
     size: 0,
-    total: 0
+    total: 0,
+    abmStatus: {
+        saving: false,
+        success: false,
+        sending: false,
+    },
+    error: {
+        anErrorOccurred: false,
+        errorMsg: ''
+    },
 }

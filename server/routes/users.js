@@ -14,10 +14,10 @@ router.get("/:id", async (req, res) => {
     res.json(user);
 })
 router.post("/add", async (req, res) => {
-    const {username, email, password, fullName, tel} = req.body
+    const {username, email, password, firstName,lastName, tel} = req.body
     const userExist = await User.findOne({where: {name: username}})
     if (userExist) {
-        res.json({error: "THIS USER EXIST"})
+        res.status(200).send( {error: "This user exists"});
     } else {
         const roleUser = await Role.findOne({where: {name: 'User'}});
         if (!roleUser) {
@@ -35,7 +35,8 @@ router.post("/add", async (req, res) => {
             let user = {
                 name: username,
                 password: hash,
-                fullName,
+                firstName,
+                lastName,
                 email,
                 tel,
                 RoleId: roleUser.id
@@ -63,15 +64,27 @@ router.post("/update/:id",validateToken,async (req, res) => {
 })
 
 router.post("/login", async (req, res) => {
-    const {username, password} = req.body;
 
-    const user = await User.findOne({where: {name: username}})
-    if (!user) res.json({error: "USER NOT FOUND"})
-    bcrypt.compare(password, user.password).then((match) => {
-        if (!match) res.json({error: "WRONG USERNAME AND PASSWORD COMBINATION"})
-        const accessToken = sign({username: user.name, id: user.id}, "importantsecret")
-        res.json(accessToken);
-    })
+    try{
+        const {username, password} = req.body;
+
+        const user = await User.findOne({where: {name: username}})
+        if (!user) res.status(200).send({error: "wrong combination of password username"})
+
+        const role = await Role.findOne({where:{id: user.id}})
+
+        bcrypt.compare(password, user.password).then((match) => {
+            if (!match){
+                res.status(200).send({error: "wrong combination of password username"})
+            }else{
+                const accessToken = sign({username: user.name, id: user.id, role: role.name}, "importantsecret")
+                res.json({token: accessToken});
+            }
+        })
+    }catch (err){
+        res.status(404).send({error: err})
+    }
+
 })
 
 

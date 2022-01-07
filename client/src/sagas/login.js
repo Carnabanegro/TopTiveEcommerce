@@ -7,8 +7,10 @@ import User from "../models/user";
 export function* fetchLoginRequested({user, password}) {
     yield put(clearError())
     try {
-        const token = yield call(UserService.login, user, password);
-        if (token) {
+        const {token,error} = yield call(UserService.login, user, password);
+        if (error) {
+            yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: error, sagaName: "login"}));
+        }else{
             const profile = yield call(UserService.decodeToken, token);
             yield put(receiveSession(new User(profile), token));
             yield put(requestLoginSucceeded());

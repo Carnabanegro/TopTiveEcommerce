@@ -7,8 +7,9 @@ import Pagination from "../common/Pagination";
 import PropTypes from "prop-types";
 import {saveOrderRequest} from "../../actions/order";
 import {useNavigate} from "react-router-dom";
+import InfoHandler from "../common/InfoHandler";
 
-function Home({fetchProducts, products, size, total, buyProduct, profile, token}) {
+function Home({fetchProducts, products, size, total, buyProduct, profile, token,error,abmStatus}) {
     const [current, setCurrent] = useState(0);
     const navigate = useNavigate();
 
@@ -43,6 +44,12 @@ function Home({fetchProducts, products, size, total, buyProduct, profile, token}
         <div>
             <ProductsList products={products} func={handleBuy} sell/>
             <Pagination current={current} size={size} total={total} onClick={handlePage}/>
+            <InfoHandler
+                errorLabel={error.errorMsg}
+                error={error.anErrorOccurred}
+                saving={abmStatus.saving}
+                success={abmStatus.success}
+            />
         </div>
 
     )
@@ -55,7 +62,9 @@ export default connect(
         total: state.product.total,
         current: state.product.current,
         token: state.session.token,
-        profile: state.session.profile
+        profile: state.session.profile,
+        abmStatus: state.abmStatus,
+        error: state.error
     }),
     dispatch => ({
         fetchProducts: (fname, fvalue, current, userId, mySells) => dispatch(requestProducts(fname, fvalue, current, userId,mySells)),
@@ -69,6 +78,15 @@ Home.protoTypes = {
     profile: PropTypes.shape({
         usuario: PropTypes.string
     }),
+    error: PropTypes.shape({
+        anErrorOccurred: PropTypes.bool,
+        errorMsg: PropTypes.string
+    }),
+    abmStatus: PropTypes.shape({
+        saving: PropTypes.bool,
+        success: PropTypes.bool,
+        sending: PropTypes.bool
+    }),
     products: PropTypes.arrayOf(PropTypes.shape({})),
     fetchProducts: PropTypes.func.isRequired,
     buyProduct: PropTypes.func.isRequired,
@@ -79,6 +97,15 @@ Home.protoTypes = {
 
 Home.defaultProps = {
     products: null,
+    abmStatus: {
+        saving: false,
+        success: false,
+        sending: false,
+    },
+    error: {
+        anErrorOccurred: false,
+        errorMsg: ''
+    },
     current: 0,
     size: 0,
     total: 0
