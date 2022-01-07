@@ -2,9 +2,8 @@ const express = require('express');
 const {User, Role} = require("../models/");
 const router = express.Router();
 const bcrypt = require('bcrypt');
-
+const { validateToken } = require("../utils/ValidToken");
 const {sign} = require('jsonwebtoken');
-const {where} = require("sequelize");
 
 router.get("/", async (req, res) => {
     const listOfUsers = await User.findAll();
@@ -48,7 +47,7 @@ router.post("/add", async (req, res) => {
 
 })
 
-router.post("/update/:id", async (req, res) => {
+router.post("/update/:id",validateToken,async (req, res) => {
     const user = req.body
     const userExist = await User.findByPk(req.params.id)
     if (!userExist) {

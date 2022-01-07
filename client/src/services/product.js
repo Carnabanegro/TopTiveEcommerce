@@ -4,7 +4,7 @@ const ENDPOINT = '/products';
 
 export default class ProductService {
 
-    static fetch(fname, fvalue, current) {
+    static fetch(fname, fvalue, current,userId,myProducts) {
         let parameters = '';
 
         if (fvalue) {
@@ -22,12 +22,23 @@ export default class ProductService {
                 parameters += `/?current=${current}`;
             }
         }
-        return (Http.get(`${ENDPOINT}${parameters}`));
+        if (userId != null){
+            if (parameters) {
+                parameters += `&userId=${userId}`;
+            } else {
+                parameters += `/?userId=${userId}`;
+            }
+        }
+        if (!myProducts){
+            return (Http.get(`${ENDPOINT}${parameters}`));
+        }else{
+            return (Http.get(`${ENDPOINT}/myProducts${parameters}`));
+        }
     }
 
-    static save(name, currency, value, descrip, username) {
+    static save(name, currency, value, descrip, username,token) {
         const data = {name, currency, value, descrip, username}
-        return (Http.post(`${ENDPOINT}/add`, data));
+        return (Http.post(`${ENDPOINT}/add`, data, token));
     }
 
 }

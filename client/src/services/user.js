@@ -24,7 +24,7 @@ export default class UserService {
     static fetch(token) {
 
         if (token) {
-            return Http.get(`${ENDPOINT}/`, token);
+            return Http.getAuth(`${ENDPOINT}/`, token);
         }
         return {
             result: null,
@@ -38,7 +38,7 @@ export default class UserService {
         const user = {
             username, password, fullName, email, tel
         };
-        return Http.post(`${ENDPOINT}/add`, user);
+        return Http.register(`${ENDPOINT}/add`, user);
     }
 
     static updateUser(token, id, jsUser) {

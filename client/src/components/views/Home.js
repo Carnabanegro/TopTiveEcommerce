@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux'
 
-import ProductsList from "./ProductsList";
+import ProductsList from "../common/ProductsList";
 import {requestProducts} from "../../actions/product";
 import Pagination from "../common/Pagination";
 import PropTypes from "prop-types";
@@ -13,12 +13,21 @@ function Home({fetchProducts, products, size, total, buyProduct, profile, token}
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchProducts(null, null, current);
+        if(!profile){
+            fetchProducts(null, null, current);
+        }else{
+            fetchProducts(null, null, current,profile.id)
+        }
     }, [])
 
     function handlePage(numberPage) {
         setCurrent(numberPage)
-        fetchProducts(null, null, numberPage)
+        if(!profile){
+            fetchProducts(null, null, numberPage,null)
+        }else{
+            fetchProducts(null, null, numberPage,profile.id)
+        }
+
     }
 
     function handleBuy(currency, value, productName) {
@@ -49,7 +58,7 @@ export default connect(
         profile: state.session.profile
     }),
     dispatch => ({
-        fetchProducts: (fname, fvalue, current) => dispatch(requestProducts(fname, fvalue, current)),
+        fetchProducts: (fname, fvalue, current, userId, mySells) => dispatch(requestProducts(fname, fvalue, current, userId,mySells)),
         buyProduct: (currency, value, username, productName, actionType) => dispatch(saveOrderRequest(currency, value, username, productName, actionType))
     })
 )(Home)

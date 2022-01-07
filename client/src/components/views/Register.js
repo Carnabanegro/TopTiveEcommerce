@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {requestRegister} from "../../actions/user";
 
-function Register({requestRegister, abmStatus}) {
+function Register({requestRegister,abmStatus}) {
 
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
@@ -15,7 +15,6 @@ function Register({requestRegister, abmStatus}) {
     const [email, setEmail] = useState("")
     const [tel, setTel] = useState("");
     const navigate = useNavigate();
-
 
     function handleForm(e) {
         e.preventDefault()
@@ -28,9 +27,9 @@ function Register({requestRegister, abmStatus}) {
 
     useEffect(() => {
         if (abmStatus.success && !abmStatus.sending && !abmStatus.saving) {
-            navigate("/login")
+            navigate("/login");
         }
-    }, [])
+    },[abmStatus]);
 
     return (
         <Container>
@@ -155,7 +154,7 @@ function Register({requestRegister, abmStatus}) {
 
 export default connect(
     state => ({
-        abmStatus: state.abmStatus
+       abmStatus: state.abmStatus
     }),
     dispatch => ({
         requestRegister: (username, password, fullName, email, tel) => dispatch(requestRegister(username, password, fullName, email, tel))
@@ -169,7 +168,8 @@ Register.protoTypes = {
     }),
     abmStatus: PropTypes.shape({
         saving: PropTypes.bool,
-        success: PropTypes.bool
+        success: PropTypes.bool,
+        sending: PropTypes.bool
     }),
     requestRegister: PropTypes.func.isRequired,
 }
@@ -177,7 +177,8 @@ Register.protoTypes = {
 Register.defaultProps = {
     abmStatus: {
         saving: false,
-        success: false
+        success: false,
+        sending: false,
     },
     error: {
         anErrorOccurred: false,

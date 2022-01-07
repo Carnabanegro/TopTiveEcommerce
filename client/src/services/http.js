@@ -25,11 +25,14 @@ export default class Http {
         });
     };
 
-    static async post(url,data) {
+    static async post(url,data,token) {
         return await axios({
                 method: 'post',
                 url: `http://localhost:8080${url}`,
-                data
+                data,
+                headers: {
+                    accessToken: token
+                }
             }).then((response) =>{
                 return response.data
             }).catch((err) => {
@@ -38,6 +41,18 @@ export default class Http {
     }
 
     static async login(url,data){
+        return await axios({
+            method: 'post',
+            url: `http://localhost:8080${url}`,
+            data
+        }).then((response) =>{
+            return response.data
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    static async register(url,data) {
         return await axios({
             method: 'post',
             url: `http://localhost:8080${url}`,

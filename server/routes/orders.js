@@ -1,6 +1,7 @@
 const express = require('express');
 const {Order, User, Product} = require("../models/");
 const Sequelize = require("sequelize");
+const {validateToken} = require("../utils/ValidToken");
 const router = express.Router();
 
 
@@ -11,17 +12,16 @@ const getPagination = (page, size) => {
     return { limit, offset };
 };
 
-router.get("/", async (req,res) =>{
+router.get("/",validateToken, async (req,res) =>{
     const page = Number.parseInt(req.query.current);
     const fname = req.query.fname;
     const fvalue = req.query.fvalue;
     const {limit,offset} = getPagination(page,10);
     const query = {where:
-            ((req.query.userId && {UserId: req.query.userId}) ||(fname && fvalue && {[fname]:{[Sequelize.Op.like]: fvalue}})), offset: offset, limit:limit, }
+            ((req.query.userId && {UserId: {[Sequelize.Op.like]: userId}}) ||(fname && fvalue && {[fname]:{[Sequelize.Op.like]: fvalue}})), offset: offset, limit:limit, }
     if (req.query.userId) {
         query.include = [{model: User, attributes: ['fullName', 'email', 'tel']}];
     }
-    console.log(query)
     const listOfOrders = await Order.findAndCountAll(query)
     res.json({
         result: listOfOrders.rows,
@@ -32,25 +32,28 @@ router.get("/", async (req,res) =>{
 })
 
 
-router.get("/:id", async (req,res) =>{
+router.get("/:id",validateToken, async (req,res) =>{
     const order = await Order.findByPk(req.params.id);
     res.json(order);
 })
 
 
-router.post("/add", async (req,res) =>{
+router.post("/add",validateToken, async (req,res) =>{
     const {currency,value,username,productName} = req.body
     const user = await User.findOne({where: {name: username}});
     const product = await Product.findOne({where: {name: productName}});
     if (!user || !product){
         res.json({error:"ERROR, DATA INCONSISTENCY"})
     }
+    product.active = 'S'
+    const productSell = await  Product.update(product)
     let order = {
         currency,
         value: Number.parseInt(value),
         UserId: user.id,
-        ProductId: product.id
+        ProductId: productSell.id,
     }
+
     order = await Order.create(order);
     res.json({
         result: order,

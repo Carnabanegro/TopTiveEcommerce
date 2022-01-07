@@ -4,7 +4,7 @@ const ENDPOINT = '/orders';
 
 export default class OrderService{
 
-    static fetch(fname,fvalue,current,userId){
+    static fetch(fname,fvalue,current,userId,token){
         let parameters = '';
 
         if (fvalue) {
@@ -29,13 +29,12 @@ export default class OrderService{
                 parameters += `/?current=${current}`;
             }
         }
-        console.log(parameters)
-        return(Http.get(`${ENDPOINT}${parameters}`));
+        return(Http.getAuth(`${ENDPOINT}${parameters}`,token));
     }
 
-    static save(currency,value,username,productName){
+    static save(currency,value,username,productName,token){
         const data = {currency,value,username,productName}
-        return(Http.post(`${ENDPOINT}/add`,data));
+        return(Http.post(`${ENDPOINT}/add`,data,token));
     }
 
 }

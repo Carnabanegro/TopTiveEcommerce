@@ -1,6 +1,6 @@
 export const FETCH_PRODUCTS_REQUESTED = 'FETCH_PRODUCTS_REQUESTED';
-export function requestProducts(fname,fvalue,current) {
-    return {type: FETCH_PRODUCTS_REQUESTED,fname,fvalue,current};
+export function requestProducts(fname,fvalue,current,userId,myProducts) {
+    return {type: FETCH_PRODUCTS_REQUESTED,fname,fvalue,current,userId,myProducts};
 }
 
 export const FETCH_PRODUCTS_SUCCEEDED = 'FETCH_PRODUCTS_SUCCEEDED';

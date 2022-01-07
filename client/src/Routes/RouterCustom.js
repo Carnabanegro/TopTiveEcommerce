@@ -5,8 +5,8 @@ import {map} from 'lodash';
 import Home from "../components/views/Home";
 import Login from "../components/views/Login";
 import Register from "../components/views/Register";
-import OrdersList from "../components/views/OrdersList";
-import PurchasesList from "../components/views/PurchasesList";
+import OrdersList from "../components/views/MyProductsToSell";
+import PurchasesList from "../components/views/MyPurchases";
 import NavBar from "../components/common/NavBar";
 import AdminPanel from "../components/views/AdminPanel";
 
@@ -22,7 +22,7 @@ function RouterCustom({session}) {
     const routes = [
         {key: 4, path: "/sells", exact: true, main: () => <OrdersList/>, name: "My Sells"},
         {key: 5, path: "/purchases", exact: true, main: () => <PurchasesList/>, name: "My Buys"},
-        {key: 5, path: "/admin", exact: true, main: () => <AdminPanel/>, name: "Admin panel"}
+        {key: 6, path: "/admin", exact: true, main: () => <AdminPanel/>, name: "Admin panel"}
     ]
     let allRoutes = session.profile && session.token ? [...routesSignIn, ...routes] : routesSignIn;
 

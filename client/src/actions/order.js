@@ -13,6 +13,6 @@ export function  saveOrderRequest(currency,value,username,productName,actionType
     return {type: SAVE_ORDER_REQUEST,currency,value,username,productName,actionType};
 }
 export  const SAVE_ORDER_SUCCEEDED = 'SAVE_ORDER_SUCCEEDED';
-export function saveOrderSucceeded(result) {
-    return {type: SAVE_ORDER_SUCCEEDED, result};
+export function saveOrderSucceeded() {
+    return {type: SAVE_ORDER_SUCCEEDED};
 }

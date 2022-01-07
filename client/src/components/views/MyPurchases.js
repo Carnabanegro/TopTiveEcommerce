@@ -6,7 +6,7 @@ import {requestOrders} from "../../actions/order";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {map} from "lodash";
 
-function PurchasesList({fetchOrders, orders, current, profile}) {
+function MyPurchases({fetchOrders, orders, current, profile}) {
 
     useEffect(() => {
         fetchOrders(null, null, current, profile.id)
@@ -70,10 +70,10 @@ export default connect(
     dispatch => ({
         fetchOrders: (fname, fvalue, current, userId) => dispatch(requestOrders(fname, fvalue, current, userId))
     })
-)(PurchasesList)
+)(MyPurchases)
 
 
-PurchasesList.protoTypes = {
+MyPurchases.protoTypes = {
     orders: PropTypes.arrayOf(PropTypes.shape({})),
     profile: PropTypes.shape({}),
     fetchOrders: PropTypes.func.isRequired,
@@ -82,7 +82,7 @@ PurchasesList.protoTypes = {
     total: PropTypes.number,
 }
 
-PurchasesList.defaultProps = {
+MyPurchases.defaultProps = {
     orders: null,
     current: 0,
     size: 0,

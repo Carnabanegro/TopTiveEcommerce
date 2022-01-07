@@ -22,6 +22,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         descrip: {
             type: DataTypes.STRING,
+        },
+        active: {
+            type: DataTypes.STRING,
+            allowNull : false,
+            validate: {
+                isIn: [['S', 'N']],
+            }
         }
     });
     Product.associate = (models) => {

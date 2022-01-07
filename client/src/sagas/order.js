@@ -1,4 +1,4 @@
-import {call, put} from "redux-saga/effects";
+import {call, put, select} from "redux-saga/effects";
 import {anErrorOccurred, clearError} from "../actions";
 import OrderService from "../services/order";
 import {requestOrdersSucceeded,saveOrderSucceeded} from "../actions/order";
@@ -7,7 +7,8 @@ import {addSucceeded, requestAdd} from "../actions/abmStatus";
 export function* fetchOrders({fname,fvalue,current,userId}){
     yield put(clearError());
     try {
-        const {result, size, total, page} = yield call(OrderService.fetch,fname,fvalue, current,userId);
+        const token = yield select(state => state.session.token);
+        const {result, size, total, page} = yield call(OrderService.fetch,fname,fvalue, current,userId,token);
         if (result) {
             yield put(requestOrdersSucceeded(result,size,total,page));
         }
@@ -20,10 +21,11 @@ export function* saveOrderRequested({currency,value,username,productName,actionT
     yield put(clearError());
     try {
         yield put(requestAdd());
+        const token = yield select(state => state.session.token);
         if (actionType === "save"){
-            const order = yield  call(OrderService.save,currency,value,username,productName)
+            const order = yield  call(OrderService.save,currency,value,username,productName,token)
             if (order){
-                yield put(saveOrderSucceeded())
+                yield put(saveOrderSucceeded(order))
                 yield put(addSucceeded());
             }
         }

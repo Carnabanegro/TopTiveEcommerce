@@ -6,7 +6,7 @@ import ModalBasic from "./modal/Modal";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-function NavBar({token, routes}) {
+function NavBar({token, routes,abmStatus}) {
 
     const [open, setOpen] = React.useState(false);
 
@@ -36,6 +36,7 @@ function NavBar({token, routes}) {
                     <div>
                         <Link className="btn btn-outline-primary" to="/login">Login</Link>
                         &nbsp;
+                        {!abmStatus.success}
                         <Link className="btn btn-outline-primary" to="/register">Register</Link>
                     </div>
                 ) : (<Button color="primary" onClick={() => handleOpen()}>LogOut</Button>)}
@@ -64,12 +65,22 @@ function NavBar({token, routes}) {
 
 export default connect(
     state => ({
+        error: state.error,
+        abmStatus: state.abmStatus,
         token: state.session.token,
         profile: state.session.profile
     })
 )(NavBar)
 
 NavBar.protoTypes = {
+    error: PropTypes.shape({
+        anErrorOccurred: PropTypes.bool,
+        errorMsg: PropTypes.string
+    }),
+    abmStatus: PropTypes.shape({
+        saving: PropTypes.bool,
+        success: PropTypes.bool
+    }),
     profile: PropTypes.shape({
         usuario: PropTypes.string
     }),

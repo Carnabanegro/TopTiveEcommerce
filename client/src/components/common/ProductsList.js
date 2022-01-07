@@ -1,6 +1,6 @@
 import React from 'react';
 import {map} from "lodash";
-import CardProduct from '../common/cards/CardProduct'
+import CardProduct from './cards/CardProduct'
 export  default function ProductsList({products,func, sell}) {
     return (
         <div className="container">
