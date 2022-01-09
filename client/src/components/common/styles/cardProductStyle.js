@@ -2,7 +2,9 @@ const CardProductStyle = () => ({
 
     card:{
         border: 'none',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        backgroundColor: '#4a1e24'
+
     },
 
     cardImg:{
@@ -11,14 +13,23 @@ const CardProductStyle = () => ({
 
     cardBody:{
         marginTop:'20px',
-        color:'#2A3542',
+        color:'white',
+        backgroundColor:'#4a1e24',
         border: 'none',
         boxShadow: 'none',
         textAlign: 'center'
     },
 
+    buttonDetail:{
+        backgroundColor: '#f6f2f3'
+    },
+
+    buttonBuy:{
+        backgroundColor: '#991f33',
+    },
+
     cardTittle:{
-        color: '#2A3542',
+        color: 'white',
         fontSize: '14px',
         fontWeight: 400,
         marginBottom: 0,

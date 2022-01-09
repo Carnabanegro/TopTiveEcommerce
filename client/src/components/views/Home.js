@@ -8,10 +8,16 @@ import PropTypes from "prop-types";
 import {saveOrderRequest} from "../../actions/order";
 import {useNavigate} from "react-router-dom";
 import InfoHandler from "../common/InfoHandler";
+import {makeStyles} from "@material-ui/core/styles";
+import HomeStyle from "./styles/home";
+import PaginationStyle from "../common/styles/pagination";
+
+const useStyles = makeStyles(HomeStyle,PaginationStyle);
 
 function Home({fetchProducts, products, size, total, buyProduct, profile, token,error,abmStatus}) {
     const [current, setCurrent] = useState(0);
     const navigate = useNavigate();
+    const classes = useStyles();
 
     useEffect(() => {
         if(!profile){
@@ -19,7 +25,9 @@ function Home({fetchProducts, products, size, total, buyProduct, profile, token,
         }else{
             fetchProducts(null, null, current,profile.id)
         }
-    }, [])
+
+    }, [] )
+
 
     function handlePage(numberPage) {
         setCurrent(numberPage)
@@ -41,9 +49,13 @@ function Home({fetchProducts, products, size, total, buyProduct, profile, token,
     }
 
     return (
-        <div>
-            <ProductsList products={products} func={handleBuy} sell/>
-            <Pagination current={current} size={size} total={total} onClick={handlePage}/>
+        <div className={classes.container}>
+            {!error.anErrorOccurred && (
+                <>
+                    <ProductsList buyProduct = {handleBuy} products={products} func={handleBuy} sell/>
+                    <Pagination className={classes.end} current={current} size={size} total={total} onClick={handlePage}/>
+                </>
+            )}
             <InfoHandler
                 errorLabel={error.errorMsg}
                 error={error.anErrorOccurred}
@@ -64,7 +76,7 @@ export default connect(
         token: state.session.token,
         profile: state.session.profile,
         abmStatus: state.abmStatus,
-        error: state.error
+        error: state.error,
     }),
     dispatch => ({
         fetchProducts: (fname, fvalue, current, userId, mySells) => dispatch(requestProducts(fname, fvalue, current, userId,mySells)),
@@ -97,6 +109,7 @@ Home.protoTypes = {
 
 Home.defaultProps = {
     products: null,
+    orders: null,
     abmStatus: {
         saving: false,
         success: false,

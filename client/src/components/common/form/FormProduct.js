@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import InfoHandler from "../InfoHandler";
 
 
-function FormProduct({username, saveProduct,changeTab,abmStatus,error}) {
+function FormProduct({username, saveProduct,changeTab,abmStatus}) {
     const [product, setProduct] = useState({
         name: '',
         currency: 'usd$',
@@ -26,16 +26,14 @@ function FormProduct({username, saveProduct,changeTab,abmStatus,error}) {
         }
     },[abmStatus]);
     return (
-        <div>
+        <div className="pb-3">
+            <h3 align="start"  className="p-2 text-light">Formulario de producto</h3>
             <Form>
                 <FormGroup>
-                    <Label for="textName">
-                        Product name
-                    </Label>
                     <Input
                         id="textName"
                         name="name"
-                        placeholder="name of product"
+                        placeholder="Name"
                         type="text"
                         onChange={e => {
                             setProduct({...product, name: e.target.value})
@@ -43,14 +41,11 @@ function FormProduct({username, saveProduct,changeTab,abmStatus,error}) {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="selectCurrency">
-                        Currency
-                    </Label>
                     <Input
                         id="selectCurrency"
                         name="currency"
                         type="select"
-                        placeholder="select currency"
+                        placeholder="Currency"
                         onChange={e => {
                             setProduct({...product, currency: e.target.value})
                         }}
@@ -65,51 +60,39 @@ function FormProduct({username, saveProduct,changeTab,abmStatus,error}) {
                     </Input>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="numberValue">
-                        Value
-                    </Label>
                     <Input
                         id="numberValue"
                         name="value"
                         type="number"
+                        placeholder="Value"
                         onChange={e => {
                             setProduct({...product, value: e.target.value})
                         }}
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="textDescrip">
-                        Product Description
-                    </Label>
                     <Input
                         id="textDescrip"
                         name="descrip"
                         type="textarea"
+                        placeholder="Product Description"
                         onChange={e => {
                             setProduct({...product, descrip: e.target.value})
                         }}
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="fileProduct">
-                        Product Picture
-                    </Label>
                     <Input
                         id="fileProduct"
                         name="pictureProduct"
                         type="file"
+                        placeholder="Product Picture"
                     />
                 </FormGroup>
-                <Button color="primary" onClick={(e) => handleForm(e)}>
+                <Button className="bg-light text-dark text-capitalize" onClick={(e) => handleForm(e)}>
                     Submit
                 </Button>
             </Form>
-            <InfoHandler
-                errorLabel={error.errorMsg}
-                error={error.anErrorOccurred}
-                saving={abmStatus.saving}
-                success={abmStatus.success}
-            />
         </div>
 
     );
@@ -118,8 +101,7 @@ function FormProduct({username, saveProduct,changeTab,abmStatus,error}) {
 export default connect(
     state => ({
         username: state.session.profile.username,
-        abmStatus: state.abmStatus,
-        error: state.error
+        abmStatus: state.abmStatus
     }),
     dispatch => ({
         saveProduct: (name, currency, value, descrip, username, actionType) => dispatch(saveProductRequest(name, currency, value, descrip, username, actionType))
@@ -128,10 +110,6 @@ export default connect(
 
 
 FormProduct.protoTypes = {
-    error: PropTypes.shape({
-        anErrorOccurred: PropTypes.bool,
-        errorMsg: PropTypes.string
-    }),
     abmStatus: PropTypes.shape({
         saving: PropTypes.bool,
         success: PropTypes.bool,
