@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {useNavigate} from 'react-router-dom'
-import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from "reactstrap";
-import {faChevronCircleRight, faPowerOff} from "@fortawesome/free-solid-svg-icons";
+import {Button, Col, Form, FormGroup, Input, Label, Row} from "reactstrap";
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {requestLogin} from "../../actions/login";
@@ -39,79 +41,76 @@ function Login({requestLogin, token,abmStatus,error,clearError}) {
     });
 
     return (
-        <div>
-            <Container className="p-5">
-                <Form onSubmit={e => handleForm(e)}>
-                    <Row class="align-items-center ">
-                        <Col sm="6">
+        <div className="container-fluid ">
+            <Row className="p-5">
+                <Col sm={{size: 4, offset: 4}} className="bg-danger bg-opacity-75 pt-2 pb-3 rounded" >
+                    <Form onSubmit={e => handleForm(e)}>
+                        <Row class="align-items-center">
+                            <Col sm="8" lg="10">
+                                <FormGroup>
+                                    <h2>
+                                        <DoubleArrowIcon fontSize="large" className="bg-dark text-light rounded-circle"/>
+                                        &nbsp; Iniciar sesión
+                                    </h2>
+                                </FormGroup>
+                            </Col>
+                            <Col sm="2" lg="2" >
+                                <Button color="transparent" onClick={handleBack}>
+                                    <CloseIcon />
+                                </Button>
+                            </Col>
+                        </Row>
+                        <Row className="p-4">
                             <FormGroup>
-                                <h2>
-                                    <FontAwesomeIcon icon={faChevronCircleRight}/>
-                                    &nbsp; Iniciar sesión
-                                </h2>
+                                <Input
+                                    id="username"
+                                    name="username"
+                                    placeholder="Username"
+                                    type="username"
+                                    onChange={e => setUser(e.target.value)}
+                                />
                             </FormGroup>
-                        </Col>
-                        <Col sm="2" >
-                            <Button onClick={handleBack}>
-                                <CloseIcon/>
-                            </Button>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <FormGroup>
-                            <Label for="username">
-                                Username
-                            </Label>
-                            <Input
-                                id="username"
-                                name="username"
-                                placeholder=""
-                                type="username"
-                                onChange={e => setUser(e.target.value)}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="password">
-                                Password
-                            </Label>
-                            <Input
-                                id="examplePassword"
-                                name="password"
-                                placeholder="password placeholder"
-                                type="password"
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </FormGroup>
-                    </Row>
-                    <Row class="align-items-center">
-                        <Col class="align-items-center" sm="12">
-                            <Button
-                                type="submit"
-                                color="primary"
-                            >
-                                <FontAwesomeIcon icon={faPowerOff}/>
-                                &nbsp; Ingresar
-                            </Button>
-                            &nbsp;
-                            <Button
-                                color="danger"
-                                onClick={e => handleRegister(e)}
-                            >
-                                <FontAwesomeIcon icon={faPowerOff}/>
-                                &nbsp; Registrarse
-                            </Button>
-                        </Col>
-                    </Row>
-                </Form>
-                <Row className="p-4">
-                    <InfoHandler
-                        errorLabel={error.errorMsg}
-                        error={error.anErrorOccurred}
-                        saving={abmStatus.saving}
-                        success={abmStatus.success}
-                    />
-                </Row>
-            </Container>
+                            <FormGroup>
+                                <Input
+                                    id="examplePassword"
+                                    name="password"
+                                    placeholder="Password"
+                                    type="password"
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                            </FormGroup>
+                        </Row>
+                        <Row class="pb-3 align-items-center">
+                            <Col sm="5" lg="6">
+                                <Button
+                                    type="submit"
+                                    color="primary"
+                                >
+                                    <LoginIcon/>
+                                    &nbsp; Ingresar
+                                </Button>
+                            </Col>
+                            <Col sm="5" lg="6">
+                                <Button
+                                    color="danger"
+                                    onClick={e => handleRegister(e)}
+                                >
+                                    <AppRegistrationIcon/>
+                                    &nbsp; Registrarse
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Col>
+            </Row>
+            <Row className="p-4">
+                <InfoHandler
+                    errorLabel={error.errorMsg}
+                    error={error.anErrorOccurred}
+                    saving={abmStatus.saving}
+                    success={abmStatus.success}
+                />
+            </Row>
         </div>
     );
 }

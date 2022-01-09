@@ -7,10 +7,10 @@ import FormProduct from '../common/form/FormProduct'
 import {requestProducts} from "../../actions/product";
 import Pagination from "../common/Pagination";
 import InfoHandler from "../common/InfoHandler";
-import {clearError} from "../../actions";
+import {anErrorOccurred, clearError} from "../../actions";
 import AddIcon from '@mui/icons-material/Add';
 
-function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatus,error,clearError}) {
+function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatus,error}) {
     const [isAdd, setAdd] = useState(false)
     const [current, setCurrent] = useState(0);
 
@@ -26,7 +26,6 @@ function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatu
 
     function handleTabAux(){
         setAdd(!isAdd);
-        clearError()
     }
 
     function handleTab(add){
@@ -35,10 +34,11 @@ function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatu
     }
 
     return (
-        <div className="container-fluid">
+
+        <div className="container-fluid p-5">
             <div className="row p-4 justify-content-end">
                 <div className="col-sm-2">
-                    <Button color="primary"
+                    <Button className="bg-danger bg-opacity-75"
                             onClick={handleTabAux}>
                         <AddIcon/>
                         &nbsp;
@@ -46,14 +46,15 @@ function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatu
                     </Button>
                 </div>
             </div>
-            <div className="row justify-content-center">
-                {!isAdd ?
-                    <div className="col-sm-12">
-                        <ProductsList products={products} noSell/>
-                        <Pagination current={current} size={size} total={total} onClick={handlePage}/>
-                    </div>
-                    :
-                    <div className="col-sm-6"><FormProduct changeTab={handleTab}/></div>
+            <div className="row justify-content-around">
+                {!isAdd  ? (
+                        !error.anErrorOccurred && (
+                            <div className="col-sm-12">
+                                <ProductsList products={products} noSell/>
+                                <Pagination current={current} size={size} total={total} onClick={handlePage}/>
+                            </div>
+                        )) :
+                        <div className="col-sm-6 bg-danger bg-opacity-75 rounded"><FormProduct changeTab={handleTab}/></div>
                 }
             </div>
             <InfoHandler

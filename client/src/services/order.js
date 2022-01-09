@@ -4,7 +4,7 @@ const ENDPOINT = '/orders';
 
 export default class OrderService{
 
-    static fetch(fname,fvalue,current,userId){
+    static fetch(fname,fvalue,current,userId,token,actionType){
         let parameters = '';
 
         if (fvalue) {
@@ -29,8 +29,15 @@ export default class OrderService{
                 parameters += `/?current=${current}`;
             }
         }
-        return(Http.get(`${ENDPOINT}${parameters}`));
+        console.log(actionType)
+        if (actionType === "liquidation"){
+            return(Http.get(`${ENDPOINT}/totalLiquidation${parameters}`,token));
+        }else{
+            return (Http.get(`${ENDPOINT}${parameters}`,token))
+        }
     }
+
+
 
     static save(currency,value,username,productName,token){
         const data = {currency,value,username,productName}

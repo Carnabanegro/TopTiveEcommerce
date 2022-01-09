@@ -3,7 +3,7 @@ import {Pagination,PaginationItem,PaginationLink} from 'reactstrap';
 import {times, uniqueId} from "lodash";
 export default function ({current,size,total,onClick}){
     return(
-            <Pagination className="justify-content-center" listClassName=" justify-content-center" >
+            <Pagination className="justify-content-center p-4"   listClassName=" justify-content-center" >
                 <PaginationItem disabled>
                     <PaginationLink
                         onClick={() => onClick(0)}

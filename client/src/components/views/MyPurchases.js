@@ -7,7 +7,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {map} from "lodash";
 import InfoHandler from "../common/InfoHandler";
 
-function MyPurchases({fetchOrders, orders, current, profile,error,abmStatus}) {
+function MyPurchases({fetchOrders,orders,current, profile,error,abmStatus}) {
 
     useEffect(() => {
         fetchOrders(null, null, current, profile.id)
@@ -15,47 +15,49 @@ function MyPurchases({fetchOrders, orders, current, profile,error,abmStatus}) {
 
 
     return (
-        <div className="container align-items-center h-100">
-            <Table striped>
-                <thead>
-                <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        Currency
-                    </th>
-                    <th>
-                        Value
-                    </th>
-                    <th>
-                        Details
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {map(orders, (order, index) => {
-                    return (
-                        <tr>
-                            <th scope="row">
-                                {index + 1}
-                            </th>
-                            <td>
-                                {order.currency}
-                            </td>
-                            <td>
-                                {order.value}
-                            </td>
-                            <td>
-                                <Button onClick={() => console.log("ver detalles")}>
-                                    <RemoveRedEyeIcon/>
-                                </Button>
-                            </td>
-                        </tr>
-                    )
-                })}
-                </tbody>
-            </Table>
+        <div className="container-fluid align-items-center h-100 p-5">
+            {!error.anErrorOccurred && (
+                <Table striped>
+                    <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Currency
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                        <th>
+                            Details
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {map(orders, (order, index) => {
+                        return (
+                            <tr>
+                                <th scope="row">
+                                    {index + 1}
+                                </th>
+                                <td>
+                                    {order.currency}
+                                </td>
+                                <td>
+                                    {order.value}
+                                </td>
+                                <td>
+                                    <Button onClick={() => console.log("ver detalles")}>
+                                        <RemoveRedEyeIcon/>
+                                    </Button>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </Table>
+            )}
             <InfoHandler
                 errorLabel={error.errorMsg}
                 error={error.anErrorOccurred}

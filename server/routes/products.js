@@ -23,12 +23,7 @@ router.get("/", async (req,res) =>{
         let search ;
         where.active = {[Sequelize.Op.like]: "S"}
         let listOfProducts;
-        if(!userId){
-            search = {where,offset: offset, limit: limit}
-        }else {
-            search =  {where,offset: offset, limit: limit,include: {model: User, as: 'User', attributes: ['firstName','lastName', 'email', 'tel']}}
-
-        }
+        search =  {where,offset: offset, limit: limit,include: {model: User, as: 'User', attributes: ['firstName','lastName', 'email', 'tel']}}
         listOfProducts = await Product.findAndCountAll(search);
         if(listOfProducts.count === 0){
             res.status(200).send( {error: "Products Not Found"});
@@ -61,11 +56,7 @@ router.get("/myProducts", async (req,res) =>{
         let search ;
         where.active = {[Sequelize.Op.like]: "S"}
         let listOfProducts;
-        if(!userId){
-            search = {where,offset: offset, limit: limit}
-        }else {
-            search =  {where,offset: offset, limit: limit,include: {model: User, as: 'User', attributes: ['firstName','lastName', 'email', 'tel']}}
-        }
+        search =  {where,offset: offset, limit: limit,include: {model: User, as: 'User', attributes: ['firstName','lastName', 'email', 'tel']}}
         listOfProducts = await Product.findAndCountAll(search);
         if (listOfProducts.count === 0){
             res.status(200).send( {error: "Products Not Found"});
@@ -98,25 +89,39 @@ router.get("/:id", async (req,res) =>{
 
 router.post("/add",validateToken, async (req,res) =>{
     const {name,currency,value,descrip,username} = req.body
-    const user = await User.findOne({where: {name: username}})
-    if (!user){
-        res.json({error:"THIS USER DOESN'T EXISTS"})
+    try{
+        const user = await User.findOne({where: {name: username}})
+        if (!user){
+            res.json({error:"THIS USER DOESN'T EXISTS"})
+        }
+        let product = {
+            name: name,
+            currency: currency,
+            value: Number.parseInt(value),
+            descrip: descrip,
+            UserId: user.id,
+            active: 'S'
+        }
+        product = await Product.create(product);
+        res.json({
+            result: product,
+            size: 1,
+            total: 1,
+            page: 0
+        })
+    }catch (err){
+        if(err.errors[0].type === "Validation error"){
+            res.status(200).json({
+                error: err.errors[0].message
+            })
+        }else{
+            res.status(404).json({
+                error: err
+            })
+        }
+
     }
-    let product = {
-        name: name,
-        currency: currency,
-        value: Number.parseInt(value),
-        descrip: descrip,
-        UserId: user.id,
-        active: 'S'
-    }
-    product = await Product.create(product);
-    res.json({
-        result: product,
-        size: 1,
-        total: 1,
-        page: 0
-    })
+
 });
 
 

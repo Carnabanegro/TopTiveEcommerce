@@ -5,10 +5,14 @@ import {Button, Container, Navbar} from "reactstrap";
 import ModalBasic from "./modal/Modal";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {makeStyles} from "@material-ui/core/styles";
+import NavBarStyle from "./styles/navbar";
 
+const useStyles = makeStyles(NavBarStyle);
 function NavBar({token, routes,abmStatus}) {
 
     const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
 
     const handleOpen = () => {
         setOpen(true);
@@ -25,19 +29,19 @@ function NavBar({token, routes,abmStatus}) {
     return (
         <div>
             <Navbar
-                color="light"
                 expand="md"
                 light
+                className={classes.container}
             >
                 <Menu menuItems={routes}/>
                 {!token ? (
                     <div>
-                        <Link className="btn btn-outline-primary" to="/login">Login</Link>
+                        <Link className="link-dark text-decoration-none m-1 h5" to="/login">Login</Link>
                         &nbsp;
                         {!abmStatus.success}
-                        <Link className="btn btn-outline-primary" to="/register">Register</Link>
+                        <Link className="link-dark text-decoration-none m-1 h5" to="/register">Register</Link>
                     </div>
-                ) : (<Button color="primary" onClick={() => handleOpen()}>LogOut</Button>)}
+                ) : (<Button color="trasparent" className="link-dark btn-lg text-decoration-none" onClick={() => handleOpen()}>LogOut</Button>)}
             </Navbar>
             <ModalBasic
                 tittle={(

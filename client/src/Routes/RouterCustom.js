@@ -9,6 +9,7 @@ import OrdersList from "../components/views/MyProductsToSell";
 import PurchasesList from "../components/views/MyPurchases";
 import NavBar from "../components/common/NavBar";
 import AdminPanel from "../components/views/AdminPanel";
+import Statistics from "../components/views/Statistics";
 
 
 function RouterCustom({session}) {
@@ -25,7 +26,8 @@ function RouterCustom({session}) {
     ]
 
     const adminRoutes = [
-        {key: 6, path: "/admin", exact: true, main: () => <AdminPanel/>, name: "Admin panel"}
+        {key: 6, path: "/statistics", exact: true, main: () => <Statistics/>, name: "Statistics"},
+        {key: 7, path: "/admin", exact: true, main: () => <AdminPanel/>, name: "Admin panel"}
     ]
     let allRoutes;
     if (session.profile && session.token){

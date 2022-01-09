@@ -37,13 +37,11 @@ function Register({requestRegister,abmStatus,error,clearError}) {
     },[abmStatus]);
 
     return (
-        <Container>
-            <Row class="p-5 align-items-center">
-                <Col sm={{size: 4, offset: 4}}>
-                    <Row>
-                        <Col>
+        <Container fluid>
+            <Row className="p-5">
+                <Col sm={{size: 4, offset: 4}} className="bg-danger bg-opacity-75 pt-2 pb-3 rounded" >
                             <Form onSubmit={e => handleForm(e)}>
-                                <Row class="align-items-center">
+                                <Row className="align-items-center">
                                     <Col sm="12">
                                         <FormGroup>
                                             <h2>
@@ -70,7 +68,7 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <Row class="vertical-margin">
+                                <Row className="vertical-margin">
                                     <Col sm="12">
                                         <FormGroup controlId="password">
                                             <Input
@@ -84,7 +82,7 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <Row class="vertical-margin">
+                                <Row className="vertical-margin">
                                     <Col sm="12">
                                         <FormGroup controlId="firstName">
                                             <Input
@@ -98,7 +96,7 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <Row class="vertical-margin">
+                                <Row className="vertical-margin">
                                     <Col sm="12">
                                         <FormGroup controlId="lastName">
                                             <Input
@@ -112,7 +110,7 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <Row class="vertical-margin">
+                                <Row className="vertical-margin">
                                     <Col sm="12">
                                         <FormGroup controlId="tel">
                                             <Input
@@ -126,7 +124,7 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <Row class="vertical-margin">
+                                <Row className="vertical-margin">
                                     <Col sm="12">
                                         <FormGroup controlId="email">
                                             <Input
@@ -140,8 +138,8 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <Row class="align-items-center">
-                                    <Col class="align-items-center" sm="12">
+                                <Row className="align-items-center">
+                                    <Col sm="5" lg="6">
                                         <Button
                                             type="submit"
                                             color="primary"
@@ -150,7 +148,8 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                             <FontAwesomeIcon icon={faPowerOff}/>
                                             &nbsp; Register
                                         </Button>
-                                        &nbsp;
+                                    </Col>
+                                    <Col sm="5" lg="6" >
                                         <Button
                                             type="submit"
                                             color="secondary"
@@ -162,9 +161,6 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                     </Col>
                                 </Row>
                             </Form>
-
-                        </Col>
-                    </Row>
                 </Col>
             </Row>
             <Row className="p-4">

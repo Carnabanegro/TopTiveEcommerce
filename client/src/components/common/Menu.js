@@ -9,6 +9,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import SellIcon from '@mui/icons-material/Sell';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import {map} from "lodash";
@@ -25,7 +26,7 @@ export default function Menu({menuItems}) {
     };
     const list = () => (
         <Box
-            sx={{width: 250}}
+            sx={{width: 250, background:'#991f33', height: '100%'}}
             role="presentation"
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
@@ -34,11 +35,12 @@ export default function Menu({menuItems}) {
                 {map(menuItems, function (item) {
                     if (item.name !== "Login" && item.name !== "Register") {
                         return (
-                            <ListItem button key={item.key} component={Link} to={item.path}>
+                            <ListItem button key={item.key}  component={Link} to={item.path}>
                                 <ListItemIcon>
                                     {item.name === "My Sells" && <SellIcon/>}
                                     {item.name === "My Buys" && <ShoppingBagIcon/>}
                                     {item.name === "Home" && <HomeIcon/>}
+                                    {item.name === "Statistics" && <AdminPanelSettingsIcon/>}
                                     {item.name === "Admin panel" && <AdminPanelSettingsIcon/>}
                                 </ListItemIcon>
                                 <ListItemText primary={item.name}/>

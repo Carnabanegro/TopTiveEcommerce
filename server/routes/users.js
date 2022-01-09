@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
             if (!match){
                 res.status(200).send({error: "wrong combination of password username"})
             }else{
-                const accessToken = sign({username: user.name, id: user.id, role: role.name}, "importantsecret")
+                const accessToken = sign({username: user.name, id: user.id}, "importantsecret")
                 res.json({token: accessToken});
             }
         })
