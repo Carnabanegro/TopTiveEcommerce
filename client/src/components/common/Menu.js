@@ -40,7 +40,7 @@ export default function Menu({menuItems}) {
                                     {item.name === "My Sells" && <SellIcon/>}
                                     {item.name === "My Buys" && <ShoppingBagIcon/>}
                                     {item.name === "Home" && <HomeIcon/>}
-                                    {item.name === "Statistics" && <AdminPanelSettingsIcon/>}
+                                    {item.name === "Statistics" && <BarChartIcon/>}
                                     {item.name === "Admin panel" && <AdminPanelSettingsIcon/>}
                                 </ListItemIcon>
                                 <ListItemText primary={item.name}/>

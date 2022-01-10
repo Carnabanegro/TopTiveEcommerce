@@ -7,7 +7,7 @@ import FormProduct from '../common/form/FormProduct'
 import {requestProducts} from "../../actions/product";
 import Pagination from "../common/Pagination";
 import InfoHandler from "../common/InfoHandler";
-import {anErrorOccurred, clearError} from "../../actions";
+import {clearError} from "../../actions";
 import AddIcon from '@mui/icons-material/Add';
 
 function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatus,error}) {
@@ -30,7 +30,7 @@ function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatu
 
     function handleTab(add){
         setAdd(add);
-        fetchProducts(null, null, current,profile.id,true);
+        fetchProducts(null, null,current,profile.id,true);
     }
 
     return (

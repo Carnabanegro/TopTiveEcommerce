@@ -29,7 +29,6 @@ export default class OrderService{
                 parameters += `/?current=${current}`;
             }
         }
-        console.log(actionType)
         if (actionType === "liquidation"){
             return(Http.get(`${ENDPOINT}/totalLiquidation${parameters}`,token));
         }else{

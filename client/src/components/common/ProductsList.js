@@ -1,7 +1,8 @@
 import React from 'react';
 import {map} from "lodash";
 import CardProduct from './cards/CardProduct'
-export  default function ProductsList({products,func, sell}) {
+
+export default function ProductsList({products,func, sell}) {
     return (
         <div className="container">
             <div className="row align-items-start">
