@@ -59,7 +59,7 @@ router.get("/myProducts", async (req,res) =>{
         search =  {where,offset: offset, limit: limit,include: {model: User, as: 'User', attributes: ['firstName','lastName', 'email', 'tel']}}
         listOfProducts = await Product.findAndCountAll(search);
         if (listOfProducts.count === 0){
-            res.status(200).send( {error: "ProductsList Not Found"});
+            res.status(200).send( {error: "Products Not Found"});
         }else{
             res.json({
                 result: listOfProducts.rows,
@@ -121,7 +121,6 @@ router.post("/add",validateToken, async (req,res) =>{
         }
 
     }
-
 });
 
 

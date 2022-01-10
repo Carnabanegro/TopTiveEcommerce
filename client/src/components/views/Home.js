@@ -97,8 +97,8 @@ class Home extends Component{
             <div className={classes.container}>
                 {!this.props.error.anErrorOccurred && (
                     <>
-                        <ProductsList products={products} func={this.handleBuy} sell/>
-                        <Pagination className={classes.end} current={current} size={size} total={total} onClick={()=> this.handlePage()}/>
+                        <ProductsList products={products} func={(currency,value,productName)=>this.handleBuy(currency,value,productName)} sell/>
+                        <Pagination className={classes.end} current={current} size={size} total={total} onClick={(page)=> this.handlePage(page)}/>
                     </>
                 )}
                 <InfoHandler

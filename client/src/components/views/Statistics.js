@@ -58,9 +58,6 @@ class Statistics extends Component{
         this.props.fetchOrdersWithLiquidation(null, null, 0,this.props.session.profile.id,"liquidation",this.props.session.token)
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        this.props.fetchOrdersWithLiquidation(null, null, 0,this.props.session.profile.id,"liquidation",this.props.session.token)
-    }
 
     handlePage(numberPage) {
         this.setState({current: numberPage})
@@ -124,7 +121,7 @@ class Statistics extends Component{
                             })}
                             </tbody>
                         </Table>
-                        <Pagination current={this.props.current} size={this.props.size} total={this.props.total} onClick={this.handlePage}/>
+                        <Pagination current={this.state.current} size={this.props.size} total={this.props.total} onClick={(page) => this.handlePage(page)}/>
                     </div>
                     <div className="col-3">
                         <div className="card border-start border-5 border-danger opacity-75">

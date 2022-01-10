@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Table} from 'reactstrap';
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
+import PropTypes, {number} from "prop-types";
 import {requestOrders} from "../../actions/order";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {map} from "lodash";
@@ -51,7 +51,7 @@ class MyPurchases extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            current : this.props.current
+            current : 0
         }
     }
 
@@ -111,7 +111,7 @@ class MyPurchases extends Component{
                     </Table>
 
                 )}
-                <Pagination className={classes.end} current={this.props.current} size={this.props.size} total={this.props.total} onClick={()=> this.handlePage()}/>
+                <Pagination className={classes.end} current={this.state.current} size={this.props.size} total={this.props.total} onClick={(page)=> this.handlePage(page)}/>
                 <InfoHandler
                     errorLabel={this.props.error.errorMsg}
                     error={this.props.error.anErrorOccurred}
