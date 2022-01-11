@@ -70,7 +70,7 @@ router.post("/login", async (req, res) => {
         const user = await User.findOne({where: {name: username}})
         if (!user) res.status(200).send({error: "wrong combination of password username"})
 
-        const role = await Role.findOne({where:{id: user.id}})
+        const role = await Role.findOne({where:{id: user.RoleId}})
 
         bcrypt.compare(password, user.password).then((match) => {
             if (!match){

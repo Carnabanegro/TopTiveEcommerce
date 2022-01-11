@@ -73,52 +73,54 @@ class MyPurchases extends Component{
         return(
             <div className="container-fluid align-items-center h-100 p-5">
                 {!this.props.error.anErrorOccurred && (
-                    <Table className="table table-bordered table-striped  table-dark">
-                        <thead>
-                        <tr>
-                            <th>
-                                #
-                            </th>
-                            <th>
-                                Product name
-                            </th>
-                            <th>
-                                Currency
-                            </th>
-                            <th>
-                                Value
-                            </th>
-                            <th>
-                                Seller Name
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {map(this.props.orders, (order, index) => {
-                            return (
-                                <tr>
-                                    <th scope="row">
-                                        {index + 1}
-                                    </th>
-                                    <th>
-                                        {order.Product.name}
-                                    </th>
-                                    <td>
-                                        {order.currency}
-                                    </td>
-                                    <td>
-                                        {order.value}
-                                    </td>
-                                    <th>
-                                        {order.Product.User.firstName} {order.Product.User.lastName}
-                                    </th>
-                                </tr>
-                            )
-                        })}
-                        </tbody>
-                    </Table>
+                    <>
+                        <Table className="table table-bordered table-striped  table-dark">
+                            <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Product name
+                                </th>
+                                <th>
+                                    Currency
+                                </th>
+                                <th>
+                                    Value
+                                </th>
+                                <th>
+                                    Seller Name
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {map(this.props.orders, (order, index) => {
+                                return (
+                                    <tr>
+                                        <th scope="row">
+                                            {index + 1}
+                                        </th>
+                                        <th>
+                                            {order.Product.name}
+                                        </th>
+                                        <td>
+                                            {order.currency}
+                                        </td>
+                                        <td>
+                                            {order.value}
+                                        </td>
+                                        <th>
+                                            {order.Product.User.firstName} {order.Product.User.lastName}
+                                        </th>
+                                    </tr>
+                                )
+                            })}
+                            </tbody>
+                        </Table>
+                        <Pagination className={classes.end} current={this.state.current} size={this.props.size} total={this.props.total} onClick={(page)=> this.handlePage(page)}/>
+                    </>
                 )}
-                <Pagination className={classes.end} current={this.state.current} size={this.props.size} total={this.props.total} onClick={(page)=> this.handlePage(page)}/>
                 <InfoHandler
                     errorLabel={this.props.error.errorMsg}
                     error={this.props.error.anErrorOccurred}

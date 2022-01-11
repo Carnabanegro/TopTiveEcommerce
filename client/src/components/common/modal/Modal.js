@@ -19,7 +19,7 @@ const ModalBasic = ({
             <Card className={classes.paper}>
                 <CardHeader className={classes.header}>
                     <img src={shopLogo} alt="logo" className={classes.img}/>
-                    <b>Top Five Store</b>
+                    <b>Top Tive Store</b>
                 </CardHeader>
                 <CardBody className={classes.body}>
                     <CardTitle className={classes.title}><b>{tittle}</b></CardTitle>

@@ -91,9 +91,6 @@ class Statistics extends Component{
                                     <th>
                                         Value
                                     </th>
-                                    <th>
-                                        Details
-                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -104,18 +101,16 @@ class Statistics extends Component{
                                                 {index + 1}
                                             </th>
                                             <td>
-
+                                                {order.User.name}
                                             </td>
                                             <td>
-                                                {order.User.lastName}
+                                                {order.User.lastName} {order.User.firstName}
                                             </td>
                                             <td>
                                                 {order.currency}
                                             </td>
                                             <td>
                                                 {order.value}
-                                            </td>
-                                            <td>
                                             </td>
                                         </tr>
                                     )
@@ -159,8 +154,8 @@ class Statistics extends Component{
 export default connect(
         state => ({
     ordersStatistics: state.orderStatistics.result,
-    size: state.order.size,
-    total: state.order.total,
+    size: state.orderStatistics.size,
+    total: state.orderStatistics.total,
     session: state.session,
     abmStatus: state.abmStatus,
     error: state.error,
