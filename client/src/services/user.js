@@ -6,7 +6,6 @@ const ENDPOINT = '/users';
 export default class UserService {
 
     static login(username, password) {
-        console.log(username)
         let data = {username, password}
         return Http.login(`${ENDPOINT}/login`, data);
     }
