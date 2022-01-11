@@ -25,7 +25,6 @@ export function* saveProductRequested({name,currency,value,descrip,username,acti
         const token = yield select(state => state.session.token);
         if (actionType === "save"){
             const {product,error} = yield  call(ProductService.save,name,currency,value,descrip,username,token)
-            console.log(error)
             if (error){
                 yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: error, sagaName: "product"}))
             }else{

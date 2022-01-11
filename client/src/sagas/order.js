@@ -9,7 +9,6 @@ export function* fetchOrders({fname,fvalue,current,userId}){
     yield put(clearError());
     try {
         const token = yield select(state => state.session.token);
-        console.log(token)
         const {result, size, total,page, error} = yield call(OrderService.fetch,fname,fvalue, current,userId,token);
         if (error){
             yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: error, sagaName: "order"}));

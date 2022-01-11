@@ -18,11 +18,16 @@ Los pasos para correr la app son.
     - Correr el comando `npm run db` en la consola del servidor. Esto creara una base de datos Sql llamada TopTive.
     - Correr tanto servidor como client con `npm run start` en el caso del servidor creara las tablas de la Base de datos con el usuario Administrador incluido.
 
-- ##Cuarto (opcional) : 
+- ##Cuarto (opcional) : (TODAVIA NO IMPLEMENTADO)
     - En el caso de  querer mas  datos en la base por defecto ,abrir una tercera consola  , hacer `cd server` seguido del comando ### `npm run dataCreate`
     
 
 ## Tecnologias usadas:
+    - React
+    - Nodejs
+    - Reacstrap
+    - MaterialUI
+    - Sequelize
 
 ## Puertos:
     Servidor: 8080 por defecto

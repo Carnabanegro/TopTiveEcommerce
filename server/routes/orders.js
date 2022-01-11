@@ -105,7 +105,6 @@ router.post("/add",validateToken, async (req,res) =>{
             },
             returning: true,
         });
-        console.log(result)
         let order = {
             currency: product.currency,
             value: Number.parseInt(product.value),
