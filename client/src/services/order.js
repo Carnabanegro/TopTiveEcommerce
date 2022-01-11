@@ -38,8 +38,8 @@ export default class OrderService{
 
 
 
-    static save(currency,value,username,productName,token){
-        const data = {currency,value,username,productName}
+    static save(id,username,token){
+        const data = {id,username}
         return(Http.post(`${ENDPOINT}/add`,data,token));
     }
 

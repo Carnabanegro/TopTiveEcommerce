@@ -22,7 +22,7 @@ router.get("/",validateToken,async (req,res) =>{
         let query;
         query = {where:
                     ((userId && {UserId: {[Sequelize.Op.eq]: userId}}) ||(fname && fvalue && {[fname]:{[Sequelize.Op.like]: fvalue}})), offset: offset, limit:limit }
-        query.include = [{model: Product, as: 'Product', attributes: ['name','currency', 'value', 'descrip'],include: [{model:User,as: 'User',attributes: ['name']}]}];
+        query.include = [{model: Product, as: 'Product', attributes: ['name','currency', 'value', 'descrip'],include: [{model:User,as: 'User',attributes: ['name','firstName','lastName', 'email', 'tel']}]}];
         const listOfOrders = await Order.findAndCountAll(query)
         if (listOfOrders.count === 0){
             res.status(200).send( {error: "Orders Not Found"});
@@ -54,7 +54,7 @@ router.get("/totalLiquidation",validateToken,async(req,res)=>{
         if(role.name !== "Admin")  res.status(200).send( {error: "The user must be Admin Role"});
 
         let where = {}
-        if (fname,fvalue) where.fname = {[Sequelize.Op.like]: fvalue};
+        if (fname && fvalue) where.fname = {[Sequelize.Op.like]: fvalue};
         let search = {where,offset: offset, limit:limit}
         search.include = [{model: User, attributes: ['name','firstName','lastName', 'email', 'tel']}];
         const liquidationUsd = await Order.sum("value",{where: {currency: {[Sequelize.Op.like]: "usd$"}}})
@@ -89,9 +89,9 @@ router.get("/:id",validateToken, async (req,res) =>{
 router.post("/add",validateToken, async (req,res) =>{
 
     try {
-        const {currency,value,username,productName} = req.body
+        const {id,username} = req.body
         const user = await User.findOne({where: {name: username}});
-        let product = await Product.findOne({where: {name: productName}});
+        let product = await Product.findByPk(id);
         if (!user || !product){
             return res.json({error: "ERROR, DATA INCONSISTENCY"})
         }
@@ -107,8 +107,8 @@ router.post("/add",validateToken, async (req,res) =>{
         });
         console.log(result)
         let order = {
-            currency,
-            value: Number.parseInt(value),
+            currency: product.currency,
+            value: Number.parseInt(product.value),
             UserId: user.id,
             ProductId: product.id,
         }
@@ -119,14 +119,11 @@ router.post("/add",validateToken, async (req,res) =>{
             total: 1,
             page: 0
         })
-
-
-
-
     }catch (err){
-
+        res.status(404).json({
+            error: err
+        })
     }
-
 })
 
 

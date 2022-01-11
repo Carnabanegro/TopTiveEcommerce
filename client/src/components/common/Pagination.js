@@ -4,14 +4,14 @@ import {times, uniqueId} from "lodash";
 export default function ({current,size,total,onClick}){
     return(
             <Pagination className="justify-content-center p-4"   listClassName=" justify-content-center" >
-                <PaginationItem disabled>
+                <PaginationItem>
                     <PaginationLink
                         onClick={() => onClick(0)}
                         first
                         href="#"
                     />
                 </PaginationItem>
-                <PaginationItem disabled>
+                <PaginationItem >
                     <PaginationLink
                         onClick={() => onClick(current === 0? 0: current-1)}
                         href="#"

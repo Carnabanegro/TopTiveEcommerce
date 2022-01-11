@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {Button, Table} from "reactstrap";
+import {Table} from "reactstrap";
 import {map} from "lodash";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import InfoHandler from "../common/InfoHandler";
 import {requestOrdersWithLiquidation} from "../../actions/order";
 import PropTypes from "prop-types";
 import Pagination from "../common/Pagination";
 import PaidIcon from '@mui/icons-material/Paid';
+import Loading from "../common/Loading";
 
 class Statistics extends Component{
 
@@ -27,7 +27,8 @@ class Statistics extends Component{
         current: PropTypes.number,
         size: PropTypes.number,
         total: PropTypes.number,
-        liquidation: PropTypes.number
+        liquidation: PropTypes.number,
+        loading: PropTypes.bool
     }
 
     static defaultProps = {
@@ -59,6 +60,8 @@ class Statistics extends Component{
     }
 
 
+
+
     handlePage(numberPage) {
         this.setState({current: numberPage})
         this.props.fetchOrdersWithLiquidation(null, null, numberPage,this.props.session.profile.id,"liquidation",this.props.session.token)
@@ -66,87 +69,92 @@ class Statistics extends Component{
 
     render(){
         return(
-            <div className="container-fluid align-items-center h-100 p-5">
-                <div className="row">
-                    <div className="col-9">
-                        <Table striped>
-                            <thead>
-                            <tr>
-                                <th>
-                                    #
-                                </th>
-                                <th>
-                                    User
-                                </th>
-                                <th>
-                                    Full Name
-                                </th>
-                                <th>
-                                    Currency
-                                </th>
-                                <th>
-                                    Value
-                                </th>
-                                <th>
-                                    Details
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {map(this.props.orders, (order, index) => {
-                                return (
-                                    <tr>
-                                        <th scope="row">
-                                            {index + 1}
-                                        </th>
-                                        <td>
+            <div>
+            {this.props.loading && (<Loading label="Cargando"/>)}
+            {!this.props.loading && (
+                <div className="container-fluid align-items-center h-100 p-5">
+                    <div className="row">
+                        <div className="col-9">
+                            <Table striped>
+                                <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        User
+                                    </th>
+                                    <th>
+                                        Full Name
+                                    </th>
+                                    <th>
+                                        Currency
+                                    </th>
+                                    <th>
+                                        Value
+                                    </th>
+                                    <th>
+                                        Details
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {map(this.props.orders, (order, index) => {
+                                    return (
+                                        <tr>
+                                            <th scope="row">
+                                                {index + 1}
+                                            </th>
+                                            <td>
 
-                                        </td>
-                                        <td>
-                                            {order.User.lastName}
-                                        </td>
-                                        <td>
-                                            {order.currency}
-                                        </td>
-                                        <td>
-                                            {order.value}
-                                        </td>
-                                        <td>
-                                            <Button onClick={() => console.log("ver detalles")}>
-                                                <RemoveRedEyeIcon/>
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                            </tbody>
-                        </Table>
-                        <Pagination current={this.state.current} size={this.props.size} total={this.props.total} onClick={(page) => this.handlePage(page)}/>
-                    </div>
-                    <div className="col-3">
-                        <div className="card border-start border-5 border-danger opacity-75">
-                            <div className="card-body row align-items-center ">
-                                <div className="col-8 font-monospace">
-                                    <div className="display-5">{this.props.liquidation}</div>
-                                    <div className="card-text">Total sales in USD</div>
-                                    <div className="display-5">{this.props.total}</div>
-                                    <div className="card-text">Number of sales</div>
-                                </div>
-                                <div className="col-4">
-                                    <PaidIcon style={{width: '5rem', height: '5rem', color: '#991f33'}}/>
+                                            </td>
+                                            <td>
+                                                {order.User.lastName}
+                                            </td>
+                                            <td>
+                                                {order.currency}
+                                            </td>
+                                            <td>
+                                                {order.value}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                                </tbody>
+                            </Table>
+                            <Pagination current={this.state.current} size={this.props.size} total={this.props.total}
+                                        onClick={(page) => this.handlePage(page)}/>
+                        </div>
+                        <div className="col-3">
+                            <div className="card border-start border-5 border-danger opacity-75">
+                                <div className="card-body row align-items-center ">
+                                    <div className="col-8 font-monospace">
+                                        <div className="display-5">{this.props.liquidation}</div>
+                                        <div className="card-text">Total sales in USD</div>
+                                        <div className="display-5">{this.props.total}</div>
+                                        <div className="card-text">Number of sales</div>
+                                    </div>
+                                    <div className="col-4">
+                                        <PaidIcon style={{width: '5rem', height: '5rem', color: '#991f33'}}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <InfoHandler
+                        errorLabel={this.props.error.errorMsg}
+                        error={this.props.error.anErrorOccurred}
+                        saving={this.props.abmStatus.saving}
+                        success={this.props.abmStatus.success}
+                    />
                 </div>
-                <InfoHandler
-                    errorLabel={this.props.error.errorMsg}
-                    error={this.props.error.anErrorOccurred}
-                    saving={this.props.abmStatus.saving}
-                    success={this.props.abmStatus.success}
-                />
-            </div>
+            )
+        }
+        </div>
         )
+
     }
 }
 
@@ -158,15 +166,14 @@ export default connect(
     session: state.session,
     abmStatus: state.abmStatus,
     error: state.error,
+            loading: state.order.loading,
     liquidation: state.order.liquidation
+
 }),
 dispatch => ({
     fetchOrdersWithLiquidation: (fname, fvalue, current, userId,actionType,token) => dispatch(requestOrdersWithLiquidation(fname, fvalue, current, userId,actionType,token))
 })
 )(Statistics)
-
-
-/*function Statistics({fetchOrdersWithLiquidation,session,orders,error,abmStatus,size,total,liquidation}){*/
 
 
 

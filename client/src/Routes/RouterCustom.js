@@ -40,7 +40,6 @@ function RouterCustom({session}) {
         allRoutes = routesSignIn;
     }
 
-
     return (
         <div>
             <BrowserRouter>

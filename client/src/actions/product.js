@@ -14,5 +14,5 @@ export function  saveProductRequest(name,currency,value,descrip,username,actionT
 }
 export  const SAVE_PRODUCT_SUCCEEDED = 'SAVE_PRODUCT_SUCCEEDED';
 export function saveProductSucceeded() {
-    return {type: FETCH_PRODUCTS_SUCCEEDED};
+    return {type: SAVE_PRODUCT_SUCCEEDED};
 }

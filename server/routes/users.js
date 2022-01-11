@@ -14,37 +14,36 @@ router.get("/:id", async (req, res) => {
     res.json(user);
 })
 router.post("/add", async (req, res) => {
-    const {username, email, password, firstName,lastName, tel} = req.body
-    const userExist = await User.findOne({where: {name: username}})
-    if (userExist) {
-        res.status(200).send( {error: "This user exists"});
-    } else {
-        const roleUser = await Role.findOne({where: {name: 'User'}});
-        if (!roleUser) {
-            res.json({error: "THIS USER EXIST"})
-        }
-        const axios = require('axios');
-        axios.get(`https://emailvalidation.abstractapi.com/v1/?api_key=a0cce05bb5454150970335e61eb6644b&email=${email}`)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        bcrypt.hash(password, 10).then(hash => {
-            let user = {
-                name: username,
-                password: hash,
-                firstName,
-                lastName,
-                email,
-                tel,
-                RoleId: roleUser.id
+    try{
+        const {username, email, password, firstName,lastName, tel} = req.body
+        const userExist = await User.findOne({where: {name: username}})
+        if (userExist) {
+            return res.status(200).send( {error: "This user exists"});
+        } else {
+            const roleUser = await Role.findOne({where: {name: 'User'}});
+            if (!roleUser) {
+                return res.json({error: "THIS USER EXIST"})
             }
-            user = User.create(user);
-            res.json({user})
-        });
+            bcrypt.hash(password, 10).then(hash => {
+                let user = {
+                    name: username,
+                    password: hash,
+                    firstName,
+                    lastName,
+                    email,
+                    tel,
+                    RoleId: roleUser.id
+                }
+                user = User.create(user);
+                return res.json({user})
+            })
+        }
+    }catch (err){
+        res.status(404).json({
+            error: err
+        })
     }
+
 
 })
 

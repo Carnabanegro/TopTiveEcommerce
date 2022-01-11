@@ -34,13 +34,13 @@ export function* fetchOrdersWithLiquidation({fname,fvalue,current,userId,token,a
     }
 }
 
-export function* saveOrderRequested({currency,value,username,productName,actionType}){
+export function* saveOrderRequested({id, username, actionType}){
     yield put(clearError());
     try {
         yield put(requestAdd());
         const token = yield select(state => state.session.token);
         if (actionType === "save"){
-            const {result,error} = yield  call(OrderService.save,currency,value,username,productName,token)
+            const {result,error} = yield  call(OrderService.save,id,username,token)
             if (error){
                 yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: error, sagaName: "order"}))
             }else{

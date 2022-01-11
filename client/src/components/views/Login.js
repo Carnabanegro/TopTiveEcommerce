@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {useNavigate} from 'react-router-dom'
-import {Button, Col, Form, FormGroup, Input, Label, Row} from "reactstrap";
+import {Button, Col, Form, FormGroup, Input, Row} from "reactstrap";
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {requestLogin} from "../../actions/login";
 import CloseIcon from '@mui/icons-material/Close';

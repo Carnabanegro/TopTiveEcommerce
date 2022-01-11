@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import {Button, Table} from 'reactstrap';
+import {Table} from 'reactstrap';
 import {connect} from "react-redux";
-import PropTypes, {number} from "prop-types";
+import PropTypes from "prop-types";
 import {requestOrders} from "../../actions/order";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {map} from "lodash";
 import InfoHandler from "../common/InfoHandler";
 import Pagination from "../common/Pagination";
 import {compose} from "redux";
 import {withStyles} from "@material-ui/core";
 import PaginationStyle from "../common/styles/pagination";
+import {clearError} from "../../actions";
 
 class MyPurchases extends Component{
 
@@ -55,7 +55,13 @@ class MyPurchases extends Component{
         }
     }
 
+    handleClose(){
+        this.setState({open:false});
+    }
+
+
     componentDidMount() {
+        clearError()
         this.props.fetchOrders(null, null, this.state.current, this.props.profile.id)
     }
 
@@ -69,11 +75,14 @@ class MyPurchases extends Component{
         return(
             <div className="container-fluid align-items-center h-100 p-5">
                 {!this.props.error.anErrorOccurred && (
-                    <Table striped>
+                    <Table className="table table-bordered table-striped  table-dark">
                         <thead>
                         <tr>
                             <th>
                                 #
+                            </th>
+                            <th>
+                                Product name
                             </th>
                             <th>
                                 Currency
@@ -82,7 +91,7 @@ class MyPurchases extends Component{
                                 Value
                             </th>
                             <th>
-                                Details
+                                Seller Name
                             </th>
                         </tr>
                         </thead>
@@ -93,23 +102,23 @@ class MyPurchases extends Component{
                                     <th scope="row">
                                         {index + 1}
                                     </th>
+                                    <th>
+                                        {order.Product.name}
+                                    </th>
                                     <td>
                                         {order.currency}
                                     </td>
                                     <td>
                                         {order.value}
                                     </td>
-                                    <td>
-                                        <Button onClick={() => console.log("ver detalles")}>
-                                            <RemoveRedEyeIcon/>
-                                        </Button>
-                                    </td>
+                                    <th>
+                                        {order.Product.User.firstName} {order.Product.User.lastName}
+                                    </th>
                                 </tr>
                             )
                         })}
                         </tbody>
                     </Table>
-
                 )}
                 <Pagination className={classes.end} current={this.state.current} size={this.props.size} total={this.props.total} onClick={(page)=> this.handlePage(page)}/>
                 <InfoHandler

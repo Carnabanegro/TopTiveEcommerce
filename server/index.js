@@ -15,8 +15,9 @@ app.use("/users" , userRouter);
 const orderRouter = require('./routes/orders');
 app.use("/orders" , orderRouter);
 const roleRouter = require('./routes/roles');
-
 app.use("/roles" , roleRouter);
+const stripePayRouter = require('./routes/stripePay');
+app.use("/stripe" , stripePayRouter);
 
 db.sequelize.sync().then(() => {
     addDefaultData();

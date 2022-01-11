@@ -19,8 +19,8 @@ export function requestOrdersWithLiquidationSucceeded(result, size, total, curre
 }
 
 export const SAVE_ORDER_REQUEST = 'SAVE_ORDER_REQUEST';
-export function  saveOrderRequest(currency,value,username,productName,actionType){
-    return {type: SAVE_ORDER_REQUEST,currency,value,username,productName,actionType};
+export function  saveOrderRequest(id, username, actionType){
+    return {type: SAVE_ORDER_REQUEST,id, username, actionType};
 }
 export  const SAVE_ORDER_SUCCEEDED = 'SAVE_ORDER_SUCCEEDED';
 export function saveOrderSucceeded() {

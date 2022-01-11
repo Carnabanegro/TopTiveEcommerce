@@ -34,7 +34,7 @@ export function* saveProductRequested({name,currency,value,descrip,username,acti
             }
         }
     }catch (err){
-        yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: 'Error de add de producto', sagaName: "product"}));
+        yield put(anErrorOccurred({anErrorOccurred: true, errorMsg: 'Error de payment', sagaName: "payment"}));
     }
 
 }

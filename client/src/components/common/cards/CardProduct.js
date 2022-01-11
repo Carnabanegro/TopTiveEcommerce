@@ -8,12 +8,13 @@ import {Divider, ListItem} from "@material-ui/core";
 import List from '@mui/material/List';
 import {Link} from 'react-router-dom';
 
+
 const useStyles = makeStyles(CardProductStyle);
 
 function CardProduct({product, buyButton, buyFunc,profile,token}) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-     //const navigate = useNavigate();
+
 
     function handleClose(){
         setOpen(false);
@@ -21,14 +22,6 @@ function CardProduct({product, buyButton, buyFunc,profile,token}) {
     function handleOpen(){
         setOpen(true)
     }
-
-    /*function handleBuy(){
-        if (!profile && !token) {
-            navigate("/login")
-        } else {
-            buyFunc(product.currency, product.value, product.name);
-        }
-    }*/
 
 
     return (
@@ -51,7 +44,7 @@ function CardProduct({product, buyButton, buyFunc,profile,token}) {
                         (profile && token)?
                             <Button
                                 className="bg-danger bg-opacity-50 col-lg-3 col-md-4 col-sm-3 border-0"
-                                onClick={() => buyFunc(product.currency, product.value, product.name)}
+                                onClick={() =>  buyFunc(product.id) }
                             >
                                 Comprar
                             </Button> :
@@ -59,8 +52,6 @@ function CardProduct({product, buyButton, buyFunc,profile,token}) {
                                 <Button className=" bg-opacity-50 col-lg-3 col-md-4 col-sm-3 border-0"> Comprar en gris</Button>
                             </Link>
                     ))}
-                    {/*{buyButton && <Button className="bg-danger bg-opacity-50 col-lg-3 col-md-4 col-sm-3 border-0"
-                                          onClick={() => handleBuy()}>Comprar</Button>*/}
                 </CardFooter>
             </Card>
             <ModalBasic tittle="Informacion sobre el producto" buttonCloseTittle="Cerrar" buttonOpenTittle="" handleModal={() => handleClose()} showModal={open}  body={
@@ -99,5 +90,6 @@ export default connect(
     state => ({
         token: state.session.token,
         profile: state.session.profile,
-    })
+    }),
+
 )(CardProduct)

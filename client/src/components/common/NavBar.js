@@ -24,8 +24,6 @@ function NavBar({token, routes,abmStatus}) {
     const handleClose = () => {
         setOpen(false);
     };
-
-
     return (
         <div>
             <Navbar

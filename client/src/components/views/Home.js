@@ -76,8 +76,8 @@ class Home extends Component{
         }
     }
 
-    handleBuy(currency, value, productName) {
-        this.props.buyProduct(currency,value, this.props.profile.username, productName, "save");
+    handleBuy(id) {
+        this.props.buyProduct(id, this.props.profile.username, "save");
     }
 
     handlePage(numberPage) {
@@ -128,7 +128,7 @@ export default compose(
         }),
         dispatch => ({
             fetchProducts: (fname, fvalue, current, userId, mySells) => dispatch(requestProducts(fname, fvalue, current, userId,mySells)),
-            buyProduct: (currency, value, username, productName, actionType) => dispatch(saveOrderRequest(currency, value, username, productName, actionType))
+            buyProduct: (id, username, actionType) => dispatch(saveOrderRequest(id, username, actionType))
         })
     ),
     withStyles(HomeStyle,PaginationStyle))(Home);
