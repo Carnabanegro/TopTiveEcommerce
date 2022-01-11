@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Table} from "reactstrap";
 import {map} from "lodash";
 import InfoHandler from "../common/InfoHandler";
-import {requestOrdersWithLiquidation} from "../../actions/order";
+import {requestOrdersWithLiquidation} from "../../actions/statistics";
 import PropTypes from "prop-types";
 import Pagination from "../common/Pagination";
 import PaidIcon from '@mui/icons-material/Paid';
@@ -21,7 +21,7 @@ class Statistics extends Component{
             success: PropTypes.bool,
             sending: PropTypes.bool
         }),
-        orders: PropTypes.arrayOf(PropTypes.shape({})),
+        ordersStatistics: PropTypes.arrayOf(PropTypes.shape({})),
         profile: PropTypes.shape({}),
         fetchOrdersWhitLiquidations: PropTypes.func.isRequired,
         current: PropTypes.number,
@@ -32,7 +32,7 @@ class Statistics extends Component{
     }
 
     static defaultProps = {
-        orders: null,
+        ordersStatistics: null,
         abmStatus: {
             saving: false,
             success: false,
@@ -58,8 +58,6 @@ class Statistics extends Component{
     componentDidMount() {
         this.props.fetchOrdersWithLiquidation(null, null, 0,this.props.session.profile.id,"liquidation",this.props.session.token)
     }
-
-
 
 
     handlePage(numberPage) {
@@ -99,7 +97,7 @@ class Statistics extends Component{
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {map(this.props.orders, (order, index) => {
+                                {map(this.props.ordersStatistics, (order, index) => {
                                     return (
                                         <tr>
                                             <th scope="row">
@@ -160,14 +158,14 @@ class Statistics extends Component{
 
 export default connect(
         state => ({
-    orders: state.order.result,
+    ordersStatistics: state.orderStatistics.result,
     size: state.order.size,
     total: state.order.total,
     session: state.session,
     abmStatus: state.abmStatus,
     error: state.error,
             loading: state.order.loading,
-    liquidation: state.order.liquidation
+    liquidation: state.orderStatistics.liquidation
 
 }),
 dispatch => ({

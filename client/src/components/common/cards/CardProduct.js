@@ -48,9 +48,12 @@ function CardProduct({product, buyButton, buyFunc,profile,token}) {
                             >
                                 Comprar
                             </Button> :
-                            <Link to={"/login"}>
-                                <Button className=" bg-opacity-50 col-lg-3 col-md-4 col-sm-3 border-0"> Comprar en gris</Button>
-                            </Link>
+                            <div className="col-lg-3 col-md-4 col-sm-3">
+                                <Link to={"/login"}>
+                                    <Button className="bg-danger bg-opacity-50  border-0"> Comprar</Button>
+                                </Link>
+                            </div>
+
                     ))}
                 </CardFooter>
             </Card>

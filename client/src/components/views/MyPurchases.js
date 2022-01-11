@@ -9,7 +9,6 @@ import Pagination from "../common/Pagination";
 import {compose} from "redux";
 import {withStyles} from "@material-ui/core";
 import PaginationStyle from "../common/styles/pagination";
-import {clearError} from "../../actions";
 
 class MyPurchases extends Component{
 
@@ -61,7 +60,6 @@ class MyPurchases extends Component{
 
 
     componentDidMount() {
-        clearError()
         this.props.fetchOrders(null, null, this.state.current, this.props.profile.id)
     }
 
@@ -144,7 +142,7 @@ export default compose(
         error: state.error
     }),
     dispatch => ({
-        fetchOrders: (fname, fvalue, current, userId) => dispatch(requestOrders(fname, fvalue, current, userId))
+        fetchOrders: (fname, fvalue, current, userId) => dispatch(requestOrders(fname, fvalue, current, userId)),
     })),
     withStyles(PaginationStyle) )(MyPurchases)
 

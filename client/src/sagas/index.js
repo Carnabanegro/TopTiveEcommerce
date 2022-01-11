@@ -3,10 +3,11 @@ import {FETCH_LOGIN_REQUESTED} from '../actions/login';
 import {fetchLoginRequested} from './login';
 import {FETCH_PRODUCTS_REQUESTED, SAVE_PRODUCT_REQUEST} from "../actions/product";
 import {fetchProducts, saveProductRequested} from "./product";
-import {FETCH_ORDERS_REQUESTED, FETCH_ORDERS_WITH_LIQUIDATION_REQUESTED, SAVE_ORDER_REQUEST} from "../actions/order";
+import {FETCH_ORDERS_REQUESTED, SAVE_ORDER_REQUEST} from "../actions/order";
 import {fetchOrders, saveOrderRequested,fetchOrdersWithLiquidation} from "./order";
 import {FETCH_REGISTER_REQUESTED} from "../actions/user";
 import {fetchRegisterRequested} from "./user";
+import {FETCH_ORDERS_WITH_LIQUIDATION_REQUESTED} from "../actions/statistics";
 
 
 export default function* root() {

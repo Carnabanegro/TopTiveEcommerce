@@ -1,8 +1,9 @@
 import {call, put, select} from "redux-saga/effects";
 import {anErrorOccurred, clearError} from "../actions";
 import OrderService from "../services/order";
-import {requestOrdersSucceeded, requestOrdersWithLiquidationSucceeded, saveOrderSucceeded} from "../actions/order";
+import {requestOrdersSucceeded, saveOrderSucceeded} from "../actions/order";
 import {addSucceeded, requestAdd} from "../actions/abmStatus";
+import {requestOrdersWithLiquidationSucceeded} from "../actions/statistics";
 
 export function* fetchOrders({fname,fvalue,current,userId}){
     yield put(clearError());
