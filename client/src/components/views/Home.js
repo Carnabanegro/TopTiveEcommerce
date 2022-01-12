@@ -76,6 +76,16 @@ class Home extends Component{
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.props.abmStatus.saving && !this.props.abmStatus.sending  && this.props.abmStatus.success){
+            if(!this.state.profile){
+                this.props.fetchProducts(null, null, this.state.current);
+            }else{
+                this.props.fetchProducts(null, null, this.state.current,this.state.profile.id)
+            }
+        }
+    }
+
     handleBuy(id) {
         this.props.buyProduct(id, this.props.profile.username, "save");
     }

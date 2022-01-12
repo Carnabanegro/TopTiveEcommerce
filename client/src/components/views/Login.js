@@ -42,7 +42,7 @@ function Login({requestLogin, token,abmStatus,error,clearError}) {
     return (
         <div className="container-fluid ">
             <Row className="p-5">
-                <Col sm={{size: 4, offset: 4}} className="bg-danger bg-opacity-75 pt-2 pb-3 rounded" >
+                <Col sm={{size: 4, offset: 4}} className="bg-dark bg-opacity-10 pt-2 pb-3 rounded" >
                     <Form onSubmit={e => handleForm(e)}>
                         <Row class="align-items-center">
                             <Col sm="8" lg="10">
@@ -83,7 +83,7 @@ function Login({requestLogin, token,abmStatus,error,clearError}) {
                             <Col sm="5" lg="6">
                                 <Button
                                     type="submit"
-                                    color="primary"
+                                    style={{backgroundColor: '#FC5130', border:'none'}}
                                 >
                                     <LoginIcon/>
                                     &nbsp; Ingresar
@@ -91,7 +91,7 @@ function Login({requestLogin, token,abmStatus,error,clearError}) {
                             </Col>
                             <Col sm="5" lg="6">
                                 <Button
-                                    color="danger"
+                                    color="dark"
                                     onClick={e => handleRegister(e)}
                                 >
                                     <AppRegistrationIcon/>

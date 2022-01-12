@@ -38,7 +38,7 @@ function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatu
         <div className="container-fluid p-5">
             <div className="row p-4 justify-content-end">
                 <div className="col-sm-2">
-                    <Button className="bg-danger bg-opacity-75"
+                    <Button className="bg-dark"
                             onClick={handleTabAux}>
                         <AddIcon/>
                         &nbsp;
@@ -54,7 +54,7 @@ function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatu
                                 <Pagination current={current} size={size} total={total} onClick={handlePage}/>
                             </div>
                         )) :
-                        <div className="col-sm-6 bg-danger bg-opacity-75 rounded"><FormProduct changeTab={handleTab}/></div>
+                        <div className="col-sm-6 bg-dark bg-opacity-10 rounded"><FormProduct changeTab={handleTab}/></div>
                 }
             </div>
             <InfoHandler

@@ -1,7 +1,7 @@
 const NavBarStyle = () => ({
 
     container:{
-        backgroundColor: '#991f33'
+        backgroundColor: '#FC5130'
     }
 
 });

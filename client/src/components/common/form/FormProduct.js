@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Form, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Form, FormGroup, Input} from 'reactstrap';
 import {connect} from "react-redux";
 import {saveProductRequest} from "../../../actions/product";
 import PropTypes from "prop-types";
-import InfoHandler from "../InfoHandler";
 
 
 function FormProduct({username, saveProduct,changeTab,abmStatus}) {
@@ -27,7 +26,7 @@ function FormProduct({username, saveProduct,changeTab,abmStatus}) {
     },[abmStatus]);
     return (
         <div className="pb-3">
-            <h3 align="start"  className="p-2 text-light">Formulario de producto</h3>
+            <h3 align="start"  className="p-2">Formulario de producto</h3>
             <Form>
                 <FormGroup>
                     <Input
@@ -89,7 +88,7 @@ function FormProduct({username, saveProduct,changeTab,abmStatus}) {
                         placeholder="Product Picture"
                     />
                 </FormGroup>
-                <Button className="bg-light text-dark text-capitalize" onClick={(e) => handleForm(e)}>
+                <Button className="bg-dark text-capitalize" onClick={(e) => handleForm(e)}>
                     Submit
                 </Button>
             </Form>

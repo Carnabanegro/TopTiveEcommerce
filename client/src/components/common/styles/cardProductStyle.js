@@ -3,7 +3,7 @@ const CardProductStyle = () => ({
     card:{
         border: 'none',
         boxShadow: 'none',
-        backgroundColor: '#4a1e24'
+        backgroundColor: '#FC5130'
 
     },
 
@@ -14,7 +14,7 @@ const CardProductStyle = () => ({
     cardBody:{
         marginTop:'20px',
         color:'white',
-        backgroundColor:'#4a1e24',
+        backgroundColor:'#FC5130',
         border: 'none',
         boxShadow: 'none',
         textAlign: 'center'
@@ -30,11 +30,20 @@ const CardProductStyle = () => ({
 
     cardTittle:{
         color: 'white',
-        fontSize: '14px',
+        fontSize: '18px',
         fontWeight: 400,
         marginBottom: 0,
         marginTop: 0,
-        fontFamily: 'Open Sans sans-serif'
+        fontFamily: 'Poppins'
+    },
+
+    cardSubttitle:{
+        color: 'white',
+        fontSize: '20px',
+        fontWeight: 500,
+        marginBottom: 0,
+        marginTop: 2,
+        fontFamily: 'Poppins'
     }
 
 });

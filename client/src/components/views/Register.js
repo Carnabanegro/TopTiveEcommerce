@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Form, FormGroup, Input, Row} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronCircleRight, faPowerOff} from "@fortawesome/free-solid-svg-icons";
+import {faChevronCircleRight, faArrowAltCircleLeft, faUserCheck} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -39,7 +39,7 @@ function Register({requestRegister,abmStatus,error,clearError}) {
     return (
         <Container fluid>
             <Row className="p-5">
-                <Col sm={{size: 4, offset: 4}} className="bg-danger bg-opacity-75 pt-2 pb-3 rounded" >
+                <Col sm={{size: 4, offset: 4}} className="bg-dark bg-opacity-10 pt-2 pb-3 rounded" >
                             <Form onSubmit={e => handleForm(e)}>
                                 <Row className="align-items-center">
                                     <Col sm="12">
@@ -142,20 +142,20 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                                     <Col sm="5" lg="6">
                                         <Button
                                             type="submit"
-                                            color="primary"
+                                            style={{backgroundColor: '#FC5130', border: 'none'}}
 
                                         >
-                                            <FontAwesomeIcon icon={faPowerOff}/>
+                                            <FontAwesomeIcon icon={faUserCheck}/>
                                             &nbsp; Register
                                         </Button>
                                     </Col>
                                     <Col sm="5" lg="6" >
                                         <Button
                                             type="submit"
-                                            color="secondary"
+                                            color="dark"
                                             onClick={() => handleBack()}
                                         >
-                                            <FontAwesomeIcon icon={faPowerOff}/>
+                                            <FontAwesomeIcon  icon={faArrowAltCircleLeft}/>
                                             &nbsp; Back
                                         </Button>
                                     </Col>

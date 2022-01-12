@@ -105,7 +105,7 @@ class MyPurchases extends Component{
                                             {order.Product.name}
                                         </th>
                                         <td>
-                                            {order.currency}
+                                            {(order.currency === 'usd$'? 'USD': '$')}
                                         </td>
                                         <td>
                                             {order.value}

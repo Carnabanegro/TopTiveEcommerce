@@ -34,8 +34,13 @@ router.post("/add", async (req, res) => {
                     tel,
                     RoleId: roleUser.id
                 }
-                user = User.create(user);
-                return res.json({user})
+                user = User.create(user).then(res =>{
+                    return res.json({user})
+                }).catch(err =>{
+                    console.log(err.errors[0])
+                    return res.status(200).send({error: err.errors[0].message})
+                });
+
             })
         }
     }catch (err){

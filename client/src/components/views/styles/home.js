@@ -1,7 +1,7 @@
 const HomeStyle = () => ({
 
     container:{
-        backgroundColor: '#f6f2f3',
+        backgroundColor: '#FFFAFF',
         paddingTop: '50px'
     },
 

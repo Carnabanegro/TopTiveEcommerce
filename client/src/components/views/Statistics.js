@@ -73,7 +73,7 @@ class Statistics extends Component{
                 <div className="container-fluid align-items-center h-100 p-5">
                     <div className="row">
                         <div className="col-9">
-                            <Table striped>
+                            <Table className="table table-bordered table-striped  table-dark">
                                 <thead>
                                 <tr>
                                     <th>
@@ -107,7 +107,7 @@ class Statistics extends Component{
                                                 {order.User.lastName} {order.User.firstName}
                                             </td>
                                             <td>
-                                                {order.currency}
+                                                {(order.currency === 'usd$'? 'USD': '$')}
                                             </td>
                                             <td>
                                                 {order.value}
@@ -121,7 +121,7 @@ class Statistics extends Component{
                                         onClick={(page) => this.handlePage(page)}/>
                         </div>
                         <div className="col-3">
-                            <div className="card border-start border-5 border-danger opacity-75">
+                            <div className="card border-start border-5 border-dark">
                                 <div className="card-body row align-items-center ">
                                     <div className="col-8 font-monospace">
                                         <div className="display-5">{this.props.liquidation}</div>
@@ -130,7 +130,7 @@ class Statistics extends Component{
                                         <div className="card-text">Number of sales</div>
                                     </div>
                                     <div className="col-4">
-                                        <PaidIcon style={{width: '5rem', height: '5rem', color: '#991f33'}}/>
+                                        <PaidIcon style={{width: '5rem', height: '5rem', color: '#FC5130'}}/>
                                     </div>
                                 </div>
                             </div>
