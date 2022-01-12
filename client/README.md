@@ -22,12 +22,16 @@ Los pasos para correr la app son.
     - En el caso de  querer mas  datos en la base por defecto ,abrir una tercera consola  , hacer `cd server` seguido del comando ### `npm run dataCreate`
     
 
+## Tarjeta de prueba para stripe:
+    4242424242424242
+
 ## Tecnologias usadas:
     - React
     - Nodejs
     - Reacstrap
     - MaterialUI
     - Sequelize
+
 
 ## Puertos:
     Servidor: 8080 por defecto

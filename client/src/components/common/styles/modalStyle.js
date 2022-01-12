@@ -9,7 +9,8 @@ const ModalBasicStyle = () => ({
         display: 'flex',
         position: 'absolute',
         fontFamily: 'Roboto, sans-serif',
-        backgroundColor: '#b5806b',
+        backgroundColor: '#FFFAFF',
+        opacity: 80,
         padding: 5
     },
     header: {

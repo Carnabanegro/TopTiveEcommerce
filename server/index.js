@@ -7,6 +7,10 @@ app.use(cors());
 const db = require('./models');
 const {addDefaultData} = require("./utils/addDefaultData");
 
+//stripe
+const stripe = require("stripe")('sk_test_CGGvfNiIPwLXiDwaOfZ3oX6Y');
+//
+
 //ROUTERS
 const productRouter = require('./routes/products');
 app.use("/products" , productRouter);
@@ -17,9 +21,20 @@ app.use("/orders" , orderRouter);
 const roleRouter = require('./routes/roles');
 app.use("/roles" , roleRouter);
 
+app.post('/stripe/charge', async (req, res) => {
+    const { token, currency, price } = req.body;
+    const charge = await stripe.charges.create({
+        amount: price,
+        currency,
+        source: token,
+    });
+    if (!charge) {
+        throw new Error("charge unsuccessful")
+    }else{
+        res.status(200).send( {message: "charge successfull"});
+    }
+});
 
-/*const stripeRouter = require('./routes/stripe');
-app.use("/stripe" , stripeRouter);*/
 
 db.sequelize.sync().then(() => {
     addDefaultData();

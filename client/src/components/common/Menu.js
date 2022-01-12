@@ -26,7 +26,7 @@ export default function Menu({menuItems}) {
     };
     const list = () => (
         <Box
-            sx={{width: 250, background:'#991f33', height: '100%'}}
+            sx={{width: 250, background:'#FC5130', height: '100%'}}
             role="presentation"
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}

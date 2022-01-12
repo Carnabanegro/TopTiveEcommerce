@@ -30,6 +30,14 @@ module.exports = (sequelize, DataTypes) => {
                     args: true,
                     msg: "The value must be a number"
                 },
+                customValidator(value) {
+                    if (value < 200 && this.currency === "$") {
+                        throw new Error("Value in $ must be greater or equals $200");
+                    }
+                    if (value < 1 && this.currency ==='usd$') {
+                        throw  new Error("Value in USD must be greater or equals to 1 USD")
+                    }
+                }
             }
         },
         descrip: {

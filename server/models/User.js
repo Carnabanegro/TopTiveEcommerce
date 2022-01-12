@@ -6,7 +6,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull : false,
             validate: {
-                isAlphanumeric:true,
+                isAlphanumeric: {
+                    args: true,
+                    msg: "Dont be blank spaces y the username"
+                },
                 len:{
                     args : [5,16],
                     msg : "Username must be between 5 and 16 characters"
