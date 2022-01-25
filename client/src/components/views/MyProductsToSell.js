@@ -57,12 +57,15 @@ function MyProductsToSell({products, fetchProducts, size, total,profile,abmStatu
                         <div className="col-sm-6 bg-dark bg-opacity-10 rounded"><FormProduct changeTab={handleTab}/></div>
                 }
             </div>
-            <InfoHandler
-                errorLabel={error.errorMsg}
-                error={error.anErrorOccurred}
-                saving={abmStatus.saving}
-                success={abmStatus.success}
-            />
+            <div className="row justify-content-around p-3">
+                <InfoHandler
+                    errorLabel={error.errorMsg}
+                    error={error.anErrorOccurred}
+                    saving={abmStatus.saving}
+                    success={abmStatus.success}
+                />
+            </div>
+
         </div>
     );
 }

@@ -15,7 +15,6 @@ const getPagination = (page, size) => {
 
 router.get("/",validateToken,async (req,res) =>{
     try{
-        console.log(req);
         const {userId,fname,fvalue} = req.query;
         const page = Number.parseInt(req.query.current);
         const {limit,offset} = getPagination(page,10);

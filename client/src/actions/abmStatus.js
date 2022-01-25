@@ -6,8 +6,8 @@ export function requestAdd() {
 }
 
 export const REQUESTED_ADD_SUCCEEDED = 'REQUESTED_ADD_SUCCEEDED';
-export function addSucceeded() {
+export function addSucceeded(successMsg) {
     return {
-        type: REQUESTED_ADD_SUCCEEDED
+        type: REQUESTED_ADD_SUCCEEDED,successMsg
     };
 }

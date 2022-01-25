@@ -4,11 +4,12 @@ const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
+require('dotenv').config()
 const db = require('./models');
 const {addDefaultData} = require("./utils/addDefaultData");
 
 //stripe
-const stripe = require("stripe")('sk_test_CGGvfNiIPwLXiDwaOfZ3oX6Y');
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 //
 
 //ROUTERS

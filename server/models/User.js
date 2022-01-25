@@ -56,6 +56,17 @@ module.exports = (sequelize, DataTypes) => {
                 },
             }
         },
+        active: {
+            type: DataTypes.STRING,
+            default: 'N',
+            allowNull : false,
+            validate: {
+                isIn: {
+                    args:  [['S', 'N']],
+                    msg: "Active must be in S or N"
+                }
+            }
+        },
         tel: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -70,9 +81,7 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (models) => {
         User.hasMany(models.Order);
         User.hasMany(models.Product, {onDelete: 'CASCADE'});
-        User.belongsTo(models.Role);
+        User.belongsTo(models.Role, {foreignKey : {name: 'RoleId'}});
     }
-
-
     return User;
 }
