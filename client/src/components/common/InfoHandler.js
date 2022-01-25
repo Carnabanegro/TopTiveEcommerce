@@ -13,7 +13,9 @@ const InfoHandler = ({
                        loading,
                        success,
                        error,
+                         successMsg,
                        errorLabel
+
                    }) => (
     <Fragment>
         {loading && (
@@ -41,7 +43,7 @@ const InfoHandler = ({
             </Alert>
         )}
 
-        {success && (
+        {success && !successMsg && (
             <Alert
                 className="text-center"
                 color="success"
@@ -60,6 +62,16 @@ const InfoHandler = ({
                 { errorLabel }
             </Alert>
         )}
+        {success && successMsg && (
+            <Alert
+                className="text-center"
+                color="success"
+            >
+                <FontAwesomeIcon icon={faCheckDouble}/>
+                &nbsp;&nbsp;
+                { successMsg }
+            </Alert>
+        )}
     </Fragment>
 );
 
@@ -68,7 +80,8 @@ InfoHandler.propTypes = {
     loading: PropTypes.bool,
     success: PropTypes.bool,
     error: PropTypes.bool,
-    errorLabel: PropTypes.string
+    errorLabel: PropTypes.string,
+    successMsg: PropTypes.string
 };
 
 InfoHandler.defaultProps = {
@@ -76,7 +89,8 @@ InfoHandler.defaultProps = {
     loading: false,
     success: false,
     error: false,
-    errorLabel: 'Error en el guardado'
+    errorLabel: 'Error en el guardado',
+    successMsg: 'Realizado con exito'
 };
 
 export default InfoHandler;

@@ -34,6 +34,7 @@ function Login({requestLogin, token,abmStatus,error,clearError}) {
     }
 
     useEffect(() => {
+
         if (token) {
             navigate("/");
         }

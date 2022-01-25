@@ -10,6 +10,7 @@ import PurchasesList from "../components/views/MyPurchases";
 import NavBar from "../components/common/NavBar";
 import AdminPanel from "../components/views/AdminPanel";
 import Statistics from "../components/views/Statistics";
+import Auth from "../components/views/Auth";
 
 
 function RouterCustom({session}) {
@@ -52,6 +53,7 @@ function RouterCustom({session}) {
                         )
                     })}
                     <Route path="*" element={<Navigate replace to="/"/>}/>
+                    <Route path="/authentication/activate/:token" element={<Auth/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

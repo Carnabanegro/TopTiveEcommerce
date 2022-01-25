@@ -32,7 +32,10 @@ function Register({requestRegister,abmStatus,error,clearError}) {
 
     useEffect(() => {
         if (abmStatus.success && !abmStatus.sending && !abmStatus.saving) {
-            navigate("/");
+            let timer = setTimeout(() => navigate("/"), 3000);
+            return () => {
+                clearTimeout(timer);
+            };
         }
     },[abmStatus]);
 
@@ -169,6 +172,7 @@ function Register({requestRegister,abmStatus,error,clearError}) {
                     error={error.anErrorOccurred}
                     saving={abmStatus.saving}
                     success={abmStatus.success}
+                    successMsg={abmStatus.successMsg}
                 />
             </Row>
         </Container>

@@ -5,7 +5,7 @@ export default function abmStatus(state = {saving: false}, action) {
     switch (action.type) {
         case CLEAR_ERROR:
             return {
-                ...state, saving: false, sending: false, success: false
+                ...state, saving: false, sending: false, success: false , successMsg: null
             };
         case ADD_REQUESTED:
             return {
@@ -13,7 +13,7 @@ export default function abmStatus(state = {saving: false}, action) {
             };
         case REQUESTED_ADD_SUCCEEDED:
             return {
-                ...state, saving: false, sending: false, success: true
+                ...state, saving: false, sending: false, success: true, successMsg: action.successMsg
             };
         case AN_ERROR_OCCURRED:
             return {

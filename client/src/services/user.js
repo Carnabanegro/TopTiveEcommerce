@@ -40,4 +40,14 @@ export default class UserService {
     static updateUser(token, id, jsUser) {
         return Http.post(`${ENDPOINT}/update/${id}`, jsUser, token);
     }
+
+    static activateAccount(token) {
+        const data = {token: token}
+        return Http.activate(`${ENDPOINT}/activate`, data)
+    }
+
+    static resendMailActivate(username,password,mail){
+        const data = {username,password,mail}
+        return Http.activate(`${ENDPOINT}/resendEmail`, data)
+    }
 }

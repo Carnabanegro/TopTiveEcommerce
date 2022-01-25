@@ -23,7 +23,9 @@ Los pasos para correr la app son.
     
 
 ## Tarjeta de prueba para stripe:
-    4242424242424242
+   - 4242424242424242
+   - Vencimiento cualquier fecha mayor a la actual.
+   - CVC y CP cualquier numero.
 
 ## Tecnologias usadas:
     - React

@@ -59,7 +59,7 @@ export default class Http {
         }).then((response) =>{
             return response.data
         }).catch((err) => {
-            console.log(err);
+            return err.response.data
         });
     }
 
@@ -71,7 +71,19 @@ export default class Http {
         }).then((response) =>{
             return response.data
         }).catch((err) => {
-            console.log(err);
+            return err.response.data
         });
+    }
+
+    static async activate(url,data){
+        return await axios({
+            method: 'post',
+            url: `http://localhost:8080${url}`,
+            data
+        }).then((response) => {
+            return response.data
+        }).catch((err) =>{
+            return err.response.data
+        })
     }
 }

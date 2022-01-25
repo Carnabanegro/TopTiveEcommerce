@@ -25,6 +25,7 @@ const  addDefaultData = async () => {
                     firstName: "Serra",
                     lastName: "Patricio",
                     email: "patoserra74@hotmail.com",
+                    active: 'S',
                     tel: "3517865189",
                     RoleId: role.id
                 }
