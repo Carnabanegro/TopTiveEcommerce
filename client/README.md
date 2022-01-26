@@ -27,12 +27,15 @@ Los pasos para correr la app son.
    - Vencimiento cualquier fecha mayor a la actual.
    - CVC y CP cualquier numero.
 
-## Tecnologias usadas:
-    - React
-    - Nodejs
-    - Reacstrap
-    - MaterialUI
-    - Sequelize
+## Verificacion por Mail : 
+  
+  - Para verificar los mail use la api de [Mailgun](https://www.mailgun.com/) 
+  - Al ser un dominio de prueba el que estoy usando es necesario autorizar los mail que se van a usar.
+    Para esto hay que ir a la pagina logearse con la cuenta:
+      - Usuario : patoserra74@hotmail.com
+      - password: papato123456
+    
+    Luego ir a la seccion de sending ,entrar al dominio y en la parte derecha esta la seccion "Authorized Recipients", ahi colocar los mail que se van a usar.
 
 
 ## Puertos:
